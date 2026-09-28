@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>하비루트 — 취미를 발견하고 이야기하는 곳</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+.hr-post-clickable{cursor:pointer;}
+.hr-post-clickable:focus-visible{outline:2px solid #2A9D8F;outline-offset:2px;}
+.hr-post-clickable .hr-v14-actions{cursor:default;}
+
+:root{--bg:#F7F5F0;--card:#fff;--ink:#18212B;--muted:#6F767D;--line:#E6E1D8;--accent:#FF6B35;--accent2:#FFF0E9;--teal:#2A9D8F;--danger:#D94B4B}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Malgun Gothic",Arial,sans-serif}body{min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.4}
+.hidden{display:none!important}.app{min-height:100vh}
+.header{height:66px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 max(18px,calc((100% - 1180px)/2));gap:28px;position:sticky;top:0;z-index:50}.logo{border:0;background:none;font-size:24px;font-weight:900;letter-spacing:-1.8px;padding:0;color:var(--ink)}.logo span{color:var(--accent)}.nav{display:flex;gap:3px;flex:1}.nav button,.header-icon{border:0;background:none;padding:9px 11px;font-size:13px}.nav button{color:#6f747a;border-radius:8px;transition:.15s}.nav button.active{color:#18212B;background:#F2F0EA;font-weight:900}.header-icon{position:relative}.dot{position:absolute;right:5px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--danger)}.login{border:1px solid #ddd;border-radius:9px;background:#fff;padding:8px 13px}
+.container{width:min(1180px,100%);margin:auto;padding:40px 22px 90px}
+#onboarding{display:none !important}
+#app{display:block !important}.onboarding{min-height:calc(100vh - 66px);display:flex}.onboard-inner{width:min(1000px,100%);margin:auto;padding:55px 22px}.step{font-size:11px;font-weight:900;letter-spacing:.12em;color:#777}.onboard-inner h1{font-size:54px;line-height:1.08;letter-spacing:-3px;margin:16px 0}.accent{color:var(--accent)}.lead{color:var(--muted);line-height:1.7}.hobby-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:38px 0}.hobby{min-height:58px;border:1px solid #ddd;background:#fff;border-radius:13px;font-weight:700}.hobby.selected{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 3px 0 var(--accent)}.actions{display:flex;align-items:center;justify-content:space-between}.skip,.plain{border:0;background:none;color:#777;padding:11px}.primary{border:0;background:var(--accent);color:#fff;border-radius:10px;padding:12px 18px;font-weight:800}.secondary{border:1px solid #ddd;background:#fff;border-radius:10px;padding:11px 16px;font-weight:700}.selected-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin:34px 0}.pills{display:flex;gap:9px;flex-wrap:wrap}.pill{background:#171717;color:#fff;border-radius:999px;padding:10px 15px;font-size:14px}
+
+#app{display:none}.page{width:min(1180px,100%);margin:auto;padding:40px 22px 90px}.page-top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}.page-top h1{font-size:40px;letter-spacing:-2px;margin:6px 0}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+.my-tabs{display:flex;gap:8px;overflow:auto;margin:0 0 13px}.my-tab{white-space:nowrap;border:1px solid #ddd;background:#fff;border-radius:999px;padding:9px 15px}.my-tab.active{background:var(--ink);color:#fff}.my-tab.add-hobby{font-weight:800;border-style:dashed}.topic-tabs{display:flex;overflow:auto;border-bottom:1px solid #ddd;margin-bottom:25px}.topic{white-space:nowrap;border:0;background:none;padding:13px 17px;color:#777;font-weight:800}.topic.active{color:var(--ink);border-bottom:3px solid var(--accent)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.quick-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:21px;transition:.15s}.quick-card:hover{transform:translateY(-2px)}.quick-card .label{font-size:12px;color:var(--accent);font-weight:900}.quick-card h3{margin:8px 0}.quick-card p{font-size:14px;color:#777;line-height:1.5}.quick-card button{border:0;background:none;font-weight:800;padding:0}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:36px 0 12px}.section-head h2{font-size:21px;margin:0}.feed-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:9px 0}.feed-item.ad{border-left:4px solid var(--accent);background:#FFF9F5;border-color:#FFD7C7}.tag{font-size:12px;color:var(--accent);font-weight:900}.meta{font-size:12px;color:#999}.feed-actions{display:flex;gap:14px;margin-top:13px}.feed-actions button{border:0;background:none;color:#777;font-size:13px}
+.searchbar{display:flex;gap:9px;margin-bottom:22px}.searchbar input{flex:1;border:1px solid #ddd;border-radius:10px;padding:13px;background:#fff}.searchbar button{white-space:nowrap}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px}.card h3{margin:8px 0}.card p{line-height:1.6}.badge{display:inline-block;background:var(--accent2);color:#C84D21;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}
+.price-table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}.price-table th,.price-table td{padding:13px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.price-table th{background:#fafafa}.price-input{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hero-result{background:#171717;color:#fff;border-radius:18px;padding:24px;margin-bottom:20px}.hero-result .big{font-size:34px;font-weight:900;margin:7px 0}.bar{height:10px;background:#333;border-radius:999px;overflow:hidden;margin:16px 0}.bar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.rating{font-size:22px;letter-spacing:1px}.review{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:10px 0}
+.detail-head{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:18px}.detail-head h1{font-size:32px;letter-spacing:-1px;margin:8px 0}.detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}
+.comments{margin-top:28px}.comment{background:#fff;border-bottom:1px solid var(--line);padding:16px 4px}.comment strong{display:block;margin-bottom:5px}.comment-form{display:flex;gap:8px;margin-top:12px}.comment-form input{flex:1;border:1px solid #ddd;border-radius:10px;padding:12px}
+.photo-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.photo-preview img{width:84px;height:84px;object-fit:cover;border-radius:9px;border:1px solid var(--line)}
+.form{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}.field{margin-bottom:16px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;border:1px solid #ddd;border-radius:10px;padding:12px;background:#fff}.field textarea{min-height:150px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.profile-head{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.avatar{width:64px;height:64px;border-radius:50%;background:#171717;color:#fff;display:grid;place-items:center;font-size:22px;font-weight:900}
+.menu-list{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden}.menu-row{display:flex;justify-content:space-between;align-items:center;width:100%;padding:17px;border:0;border-bottom:1px solid var(--line);background:#fff;text-align:left}.menu-row:last-child{border-bottom:0}
+.dashboard{display:grid;grid-template-columns:230px 1fr;gap:18px}.side{background:#fff;border:1px solid var(--line);border-radius:15px;padding:10px;height:max-content}.side button{display:block;width:100%;border:0;background:none;padding:12px;text-align:left;border-radius:9px}.side button.active{background:#eeeefe;font-weight:800;color:#4f51d9}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.stat b{font-size:26px}.ad-create{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;margin-top:14px}
+.bottom-nav{display:none}
+
+.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:100}.modal-card{width:min(560px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;padding:23px}.modal-card h2{margin-top:0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#171717;color:#fff;padding:12px 18px;border-radius:999px;z-index:120;font-size:13px}
+@media(max-width:760px){
+.header{padding:0 13px;gap:10px}.nav{overflow:auto}.nav button{font-size:12px;white-space:nowrap}.login{font-size:12px}.container,.page{padding:32px 16px 90px}.onboard-inner h1{font-size:42px}.hobby-grid{grid-template-columns:repeat(3,1fr);gap:8px}.hobby{min-height:53px;font-size:13px}.quick,.grid3,.grid2,.dashboard{grid-template-columns:1fr}.page-top{align-items:flex-start}.page-top h1{font-size:33px}.stat-grid{grid-template-columns:1fr 1fr}.side{display:none}.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:63px;background:#fff;border-top:1px solid var(--line);display:flex;z-index:40}.bottom-nav button{flex:1;border:0;background:#fff;font-size:11px;color:#777}.bottom-nav button.active{color:#111;font-weight:900}.price-input{grid-template-columns:1fr}.searchbar{position:sticky;top:66px;z-index:10;background:var(--bg);padding:5px 0}
+}
+
+
+.business-only, .business-menu, .business-cta, .business-dashboard,
+.business-registration, .business-ad, .business-promo, [data-business-only="true"] {
+  display:none !important;
+}
+
+
+/* v5 onboarding completion transition */
+.habiroute-transition {
+  position: fixed; inset: 0; z-index: 99999;
+  display:flex; align-items:center; justify-content:center;
+  background:#F7F5F0; opacity:0; pointer-events:none;
+  transition:opacity .35s ease;
+}
+.habiroute-transition.show { opacity:1; pointer-events:auto; }
+.habiroute-transition-card { text-align:center; transform:translateY(8px); transition:transform .35s ease; }
+.habiroute-transition.show .habiroute-transition-card { transform:translateY(0); }
+.habiroute-transition-logo { font-weight:900; font-size:30px; color:#18212B; letter-spacing:-1.5px; }
+.habiroute-transition-text { margin-top:12px; color:#6B7280; font-size:14px; }
+.habiroute-transition-dots { display:flex; gap:5px; justify-content:center; margin-top:18px; }
+.habiroute-transition-dots span { width:6px; height:6px; border-radius:50%; background:#FF6B35; animation:hrDot 1s infinite ease-in-out; }
+.habiroute-transition-dots span:nth-child(2){animation-delay:.12s}
+.habiroute-transition-dots span:nth-child(3){animation-delay:.24s}
+@keyframes hrDot { 0%,70%,100%{transform:scale(.65);opacity:.35} 35%{transform:scale(1);opacity:1} }
+
+
+/* v6:  is not part of the consumer launch navigation */
+.hr-hide-business { display:none !important; }
+
+
+.habiroute-transition-card { min-width:260px; }
+.habiroute-transition-text { letter-spacing:-.2px; }
+.habiroute-transition-progress {
+  width:150px;height:3px;border-radius:999px;overflow:hidden;
+  background:#E6E1D8;margin:18px auto 0;
+}
+.habiroute-transition-progress span {
+  display:block;height:100%;width:0;background:#FF6B35;border-radius:999px;
+  animation:hrProgress 2s linear forwards;
+}
+@keyframes hrProgress { from{width:0} to{width:100%} }
+
+
+/* v10: activity grade / hobby level */
+.hr-grade-card{
+  margin:16px 0;padding:18px;border:1px solid #E6E1D8;border-radius:18px;
+  background:#fff;
+}
+.hr-grade-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hr-grade-name{font-weight:900;color:#18212B;font-size:17px;letter-spacing:-.4px}
+.hr-grade-badge{padding:6px 10px;border-radius:999px;background:#FFF1EA;color:#D94F20;font-size:12px;font-weight:800}
+.hr-grade-sub{margin-top:6px;color:#69717B;font-size:12px}
+.hr-grade-level{margin-top:14px;display:flex;align-items:center;justify-content:space-between}
+.hr-level-number{font-weight:900;color:#18212B}
+.hr-level-xp{font-size:12px;color:#69717B}
+.hr-progress{height:7px;background:#EEEAE2;border-radius:999px;overflow:hidden;margin-top:8px}
+.hr-progress span{display:block;height:100%;width:42%;background:#FF6B35;border-radius:999px}
+.hr-grade-stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hr-stat{padding:8px 10px;background:#F7F5F0;border-radius:10px;font-size:11px;color:#4B5563}
+.hr-hobby-level{
+  display:inline-flex;align-items:center;gap:5px;margin-top:10px;
+  font-size:12px;font-weight:800;color:#2A9D8F;
+}
+
+
+/* v11: dedicated MY page */
+.hr-my-page{padding:20px 16px 96px;background:#F7F5F0;min-height:100%}
+.hr-my-profile{display:flex;align-items:center;gap:13px;padding:18px;background:#fff;border:1px solid #E6E1D8;border-radius:18px}
+.hr-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#18212B;color:#fff;font-weight:900}
+.hr-my-name{font-size:18px;font-weight:900;color:#18212B}
+.hr-my-email{margin-top:4px;font-size:12px;color:#737A83}
+.hr-my-section{margin-top:18px}
+.hr-my-title{font-size:12px;font-weight:900;color:#737A83;margin:0 4px 8px}
+.hr-my-list{background:#fff;border:1px solid #E6E1D8;border-radius:16px;overflow:hidden}
+.hr-my-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border-bottom:1px solid #EEEAE2;background:#fff;color:#18212B;text-decoration:none;cursor:pointer}
+.hr-my-row:last-child{border-bottom:0}
+.hr-my-row strong{font-size:14px}
+.hr-my-row span{font-size:13px;color:#9AA0A6}
+.hr-my-grade{padding:16px;background:#fff;border:1px solid #E6E1D8;border-radius:16px}
+.hr-my-grade-top{display:flex;justify-content:space-between;align-items:center}
+.hr-my-grade-name{font-size:16px;font-weight:900;color:#18212B}
+.hr-my-grade-badge{font-size:11px;font-weight:800;color:#D94F20;background:#FFF1EA;padding:6px 9px;border-radius:999px}
+.hr-my-grade-sub{font-size:12px;color:#737A83;margin-top:5px}
+.hr-my-level{display:flex;justify-content:space-between;margin-top:14px;font-size:12px;color:#737A83}
+.hr-my-progress{height:7px;background:#EEEAE2;border-radius:999px;overflow:hidden;margin-top:7px}
+.hr-my-progress i{display:block;width:63%;height:100%;background:#FF6B35;border-radius:999px}
+.hr-my-hobbies{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.hr-my-hobby{font-size:11px;font-weight:800;padding:7px 9px;border-radius:9px;background:#F7F5F0;color:#374151}
+.hr-my-logout{color:#D94F20!important}
+
+
+/* v18 home identity: discovery-first homepage */
+.hr-home{max-width:1080px;margin:0 auto}
+.hr-home-hero{background:linear-gradient(135deg,#18212B 0%,#243542 100%);color:#fff;border-radius:24px;padding:38px 40px;margin-bottom:22px;position:relative;overflow:hidden}
+.hr-home-hero:after{content:"";position:absolute;width:240px;height:240px;border:38px solid rgba(42,157,143,.18);border-radius:50%;right:-90px;top:-90px}
+.hr-home-kicker{font-size:12px;letter-spacing:1.5px;font-weight:900;color:#8FD7CF;margin-bottom:10px}
+.hr-home-hero h1{font-size:38px;line-height:1.2;letter-spacing:-2px;margin:0 0 10px;position:relative;z-index:1}
+.hr-home-hero p{margin:0 0 22px;color:#DCE4E8;line-height:1.6;position:relative;z-index:1}
+.hr-home-search{display:flex;gap:8px;position:relative;z-index:2;max-width:620px}
+.hr-home-search input{flex:1;min-width:0;border:0;border-radius:12px;padding:14px 16px;font-size:14px;outline:none}
+.hr-home-search button{border:0;border-radius:12px;background:#FF6B35;color:#fff;font-weight:900;padding:0 20px;cursor:pointer}
+.hr-home-add-hobby{position:relative;z-index:2;border:0;border-radius:12px;background:#FF6B35;color:#fff;font-weight:900;padding:13px 20px;cursor:pointer;font-size:14px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.hr-home-empty-hobby{display:block;background:#fff;border:1px dashed #D8D2C8;border-radius:12px;padding:14px 16px;color:#777;font-size:14px}
+.hr-home-section{margin:28px 0}
+.hr-home-section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
+.hr-home-section-head h2{margin:0;font-size:20px;letter-spacing:-.7px}
+.hr-home-section-head p{margin:3px 0 0;color:#777;font-size:13px}
+.hr-home-link{border:0;background:none;font-weight:800;color:#555;cursor:pointer}
+.hr-home-hobbies{display:flex;gap:8px;overflow:auto;padding-bottom:2px}
+.hr-home-hobby{white-space:nowrap;border:1px solid #E6E1D8;background:#fff;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer}
+.hr-home-hobby.active{background:#18212B;color:#fff;border-color:#18212B}
+.hr-discovery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.hr-discovery-card{background:#fff;border:1px solid #E6E1D8;border-radius:18px;padding:21px;cursor:pointer;transition:.15s}
+.hr-discovery-card:hover{transform:translateY(-2px)}
+.hr-discovery-label{font-size:11px;font-weight:900;color:#2A9D8F;letter-spacing:.3px}
+.hr-discovery-card h3{font-size:19px;letter-spacing:-.6px;margin:8px 0 7px}
+.hr-discovery-card p{font-size:13px;line-height:1.55;color:#666;margin:0}
+.hr-discovery-meta{margin-top:13px;font-size:12px;color:#999}
+.hr-popular-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.hr-popular{background:#fff;border:1px solid #E6E1D8;border-radius:14px;padding:16px;cursor:pointer}
+.hr-popular strong{display:block;font-size:16px;margin-bottom:5px}
+.hr-popular span{font-size:12px;color:#888}
+.hr-recent{background:#fff;border:1px solid #E6E1D8;border-radius:16px;overflow:hidden}
+.hr-recent-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid #eee;cursor:pointer}
+.hr-recent-row:last-child{border-bottom:0}
+.hr-recent-cat{flex:0 0 auto;font-size:11px;font-weight:900;color:#2A9D8F;background:#EFF8F6;border-radius:7px;padding:5px 7px}
+.hr-recent-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;font-size:14px}
+.hr-recent-meta{font-size:11px;color:#999;white-space:nowrap}
+.hr-home-empty{background:#fff;border:1px dashed #D8D2C8;border-radius:16px;padding:24px;text-align:center;color:#777}
+@media(max-width:760px){
+ .hr-home-hero{padding:28px 22px;border-radius:20px}.hr-home-hero h1{font-size:31px}.hr-home-search{flex-direction:column}.hr-home-search button{height:44px}.hr-discovery-grid{grid-template-columns:1fr}.hr-popular-grid{grid-template-columns:repeat(2,1fr)}.hr-recent-meta{display:none}
+}
+
+.search-results-slot{margin-top:12px;clear:both;display:block;}
+.search-results-slot:empty{display:none;}
+.search-results-head{font-size:13px;font-weight:800;color:#555;padding:8px 2px 6px;}
+.search-results-head strong{color:#FF6B35;}
+.search-result-row{display:block;background:#fff;border-top:1px solid #E6E1D8;padding:11px 4px 10px;min-width:0;}
+.search-result-row:last-child{border-bottom:1px solid #E6E1D8;}
+.search-result-meta{font-size:11px;color:#7A7F85;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.search-result-title{margin-top:4px;font-size:15px;font-weight:800;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#18212B;}
+.search-result-row img,.search-result-row picture,.search-result-row video,.search-result-row canvas,.search-result-row .photo-preview{display:none!important;}
+.search-empty{background:#fff;border:1px solid #E6E1D8;padding:16px;border-radius:10px;color:#777;font-size:13px;}
+ 
+.search-panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}.search-panel-head h2{margin:0;font-size:18px}.search-chip-wrap,.recent-search-wrap{display:flex;flex-wrap:wrap;gap:8px}.search-chip,.recent-search{border:1px solid #E6E1D8;background:#F7F5F0;border-radius:999px;padding:8px 12px;cursor:pointer}.search-chip:hover,.recent-search:hover{border-color:#2A9D8F}.search-rank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.search-rank{display:flex;align-items:center;gap:12px;width:100%;padding:11px 4px;border:0;border-bottom:1px solid #eee;background:transparent;text-align:left;cursor:pointer;font-size:15px}.search-rank .rank{width:24px;font-weight:800;color:#FF6B35}.search-rank:hover{background:#faf9f6}@media(max-width:640px){.search-rank-list{grid-template-columns:1fr}.search-panel{padding:14px}}
+</style>
+
+<style>
+
+[data-nav="business"], .business-only, .business-menu, .business-cta,
+.business-dashboard, .business-registration, .business-ad, .business-promo {
+  display:none !important;
+}
+</style>
+
+
+<style>
+#profilePage{
+  background:#F7F5F0!important;
+  min-height:100vh!important;
+}
+#profilePage .hr-my-real{padding:18px 16px 100px;max-width:720px;margin:0 auto}
+.hr-my-real .hr-my-profile{display:flex;align-items:center;gap:13px;padding:18px;background:#fff;border:1px solid #E6E1D8;border-radius:18px}
+.hr-my-real .hr-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#18212B;color:#fff;font-weight:900}
+.hr-my-real .hr-my-name{font-size:18px;font-weight:900;color:#18212B}
+.hr-my-real .hr-my-email{margin-top:4px;font-size:12px;color:#737A83}
+.hr-my-real .hr-my-section{margin-top:18px}
+.hr-my-real .hr-my-title{font-size:12px;font-weight:900;color:#737A83;margin:0 4px 8px}
+.hr-my-real .hr-my-list{background:#fff;border:1px solid #E6E1D8;border-radius:16px;overflow:hidden}
+.hr-my-real .hr-my-row{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;border-bottom:1px solid #EEEAE2;color:#18212B;text-decoration:none}
+.hr-my-real .hr-my-row:last-child{border-bottom:0}
+.hr-my-real .hr-my-row strong{font-size:14px}
+.hr-my-real .hr-my-row span{font-size:13px;color:#9AA0A6}
+.hr-my-real .hr-my-grade{padding:16px;background:#fff;border:1px solid #E6E1D8;border-radius:16px}
+.hr-my-real .hr-my-grade-top{display:flex;justify-content:space-between;align-items:center}
+.hr-my-real .hr-my-grade-name{font-size:16px;font-weight:900;color:#18212B}
+.hr-my-real .hr-my-grade-badge{font-size:11px;font-weight:800;color:#D94F20;background:#FFF1EA;padding:6px 9px;border-radius:999px}
+.hr-my-real .hr-my-grade-sub{font-size:12px;color:#737A83;margin-top:5px}
+.hr-my-real .hr-my-level{display:flex;justify-content:space-between;margin-top:14px;font-size:12px;color:#737A83}
+.hr-my-real .hr-my-progress{height:7px;background:#EEEAE2;border-radius:999px;overflow:hidden;margin-top:7px}
+.hr-my-real .hr-my-progress i{display:block;width:63%;height:100%;background:#FF6B35;border-radius:999px}
+.hr-my-real .hr-my-hobbies{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.hr-my-real .hr-my-hobby{font-size:11px;font-weight:800;padding:7px 9px;border-radius:9px;background:#F7F5F0;color:#374151}
+.hr-my-real .hr-my-logout strong{color:#D94F20}
+</style>
+
+
+<style>
+/* v13: no level/grade card in the bottom/home area */
+.hr-grade-card,
+#hrGradeCard,
+.hr-grade:not(.hr-my-grade),
+.hr-grade-level,
+.hr-grade-stats {
+  display:none !important;
+}
+</style>
+
+
+<style id="habiroute-v14-css">
+.hr-v14-feed-tools{display:flex;gap:8px;overflow:auto;padding:10px 0 4px;scrollbar-width:none}
+.hr-v14-feed-tools::-webkit-scrollbar{display:none}
+.hr-v14-tool{flex:0 0 auto;border:1px solid #E6E1D8;background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;color:#4B5563;cursor:pointer}
+.hr-v14-tool.active{background:#18212B;color:#fff;border-color:#18212B}
+.hr-v14-post{background:#fff;border:1px solid #E6E1D8;border-radius:16px;padding:15px;margin:10px 0}
+.hr-v14-post-head{display:flex;justify-content:space-between;gap:10px}
+.hr-v14-user{font-size:12px;font-weight:900;color:#18212B}
+.hr-v14-meta{font-size:11px;color:#8A9199;margin-top:3px}
+.hr-v14-post-title{font-size:16px;font-weight:900;line-height:1.4;color:#18212B;margin:11px 0 6px}
+.hr-v14-post-body{font-size:13px;line-height:1.6;color:#4B5563}
+.hr-v14-tag{display:inline-block;margin:8px 5px 0 0;padding:5px 8px;border-radius:7px;background:#F7F5F0;color:#5B6470;font-size:10px;font-weight:800}
+.hr-v14-actions{display:flex;gap:15px;margin-top:13px;padding-top:11px;border-top:1px solid #EEEAE2}
+.hr-v14-action{border:0;background:none;color:#737A83;font-size:12px;cursor:pointer;padding:0}
+.hr-v14-action.on{color:#FF6B35;font-weight:900}
+.hr-v14-write{position:fixed;right:20px;bottom:82px;width:54px;height:54px;border:0;border-radius:50%;background:#FF6B35;color:#fff;font-size:25px;font-weight:700;box-shadow:0 8px 24px rgba(24,33,43,.18);cursor:pointer;z-index:50}
+.hr-v14-modal{position:fixed;inset:0;background:rgba(24,33,43,.42);display:none;align-items:flex-end;justify-content:center;z-index:100}
+.hr-v14-modal.show{display:flex}
+.hr-v14-sheet{width:min(720px,100%);background:#fff;border-radius:22px 22px 0 0;padding:20px;box-sizing:border-box}
+.hr-v14-sheet h3{margin:0 0 14px;color:#18212B}
+.hr-v14-input,.hr-v14-textarea,.hr-v14-select{width:100%;box-sizing:border-box;border:1px solid #E6E1D8;border-radius:12px;padding:12px;margin:6px 0 9px;font:inherit}
+.hr-v14-textarea{min-height:130px;resize:vertical}
+.hr-v14-primary{width:100%;border:0;border-radius:12px;padding:13px;background:#FF6B35;color:#fff;font-weight:900;cursor:pointer}
+.hr-v14-secondary{width:100%;border:0;background:#F7F5F0;color:#18212B;border-radius:12px;padding:12px;margin-top:8px;font-weight:800;cursor:pointer}
+.hr-v14-empty{text-align:center;padding:40px 20px;color:#737A83}
+.hr-v14-notice{padding:12px 14px;background:#FFF7F2;border:1px solid #F3D5C7;border-radius:12px;color:#7B4A36;font-size:12px;line-height:1.5;margin:10px 0}
+</style>
+
+
+<style id="habiroute-v15-user-only">
+
+[data-nav="business"],
+[data-business-only="true"],
+.business-only,.business-menu,.business-cta,.business-dashboard,
+.business-registration,.business-ad,.business-promo,.business-row,
+.business-card,.biz-card,.vendor-card,.seller-card,
+.ad-card,.advert-card,.commercial-card,
+#businessPage,#businessDetailPage,#businessDashboard,#businessRegistration,
+#homeBiz,#communityBiz,#communityBizList {
+  display:none !important;
+}
+</style>
+
+
+<style>
+
+#homePage .business-only,
+#homePage .business-menu,
+#homePage .business-cta,
+#homePage .business-row,
+#homePage .business-card,
+#homePage .biz-card,
+#homePage [data-nav="business"],
+#homePage [data-business-only="true"]{
+  display:none!important;
+}
+</style>
+
+
+<style id="habiroute-v17-no-business">
+
+[data-nav="business"],
+[data-business-only="true"],
+[data-company="true"],
+[data-vendor="true"],
+.business-only,.business-menu,.business-cta,.business-dashboard,
+.business-registration,.business-ad,.business-promo,.business-row,
+.business-card,.biz-card,.vendor-card,.seller-card,.company-card,
+.ad-card,.advert-card,.commercial-card,
+#businessPage,#businessDetailPage,#businessDashboard,#businessRegistration,
+#homeBiz,#communityBiz,#communityBizList,#businessSection {
+  display:none!important;
+}
+</style>
+
+
+<style>
+.lounge-section{margin:16px 0 14px;padding:14px 16px;background:#fff;border:1px solid #E6E1D8;border-radius:12px}
+.lounge-section-title{font-size:16px;font-weight:900;color:#18212B}
+.lounge-section-sub{margin-top:3px;font-size:12px;color:#737A83}
+.lounge-section-tabs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.lounge-tab{border:1px solid #E1DDD5;background:#fff;color:#3F4750;border-radius:7px;padding:8px 12px;font-weight:800;font-size:13px;cursor:pointer}
+.lounge-tab.active{background:#18212B;color:#fff;border-color:#18212B}
+.lounge-head{display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap}
+.lounge-tabs{display:flex;gap:7px;flex-wrap:wrap}
+.lounge-notice-list{margin-top:10px}
+.lounge-notice{padding:18px;background:#fff;border:1px solid #E6E1D8;border-radius:10px}
+.lounge-notice h3{margin:9px 0 6px;font-size:17px;color:#18212B}
+.lounge-notice p{margin:0;color:#5F6670;font-size:14px}
+</style>
+
+<style id="habiroute-final-extras">
+#hrGradeCard{display:none!important}
+.my-page-btn{font:inherit;font-weight:800;border:1px solid #E6E1D8;background:#fff;color:#18212B;border-radius:10px;padding:8px 11px;cursor:pointer}
+</style>
+<style id="habiroute-compact-board-css">
+/* UI-only: DC/Ppomco-style compact community list. Data and behavior remain unchanged. */
+.hr-v14-post{border-radius:8px;padding:10px 12px;margin:3px 0;background:#fff;border:1px solid #E6E1D8}
+.hr-v14-compact-meta{display:flex;align-items:center;gap:10px;min-width:0;white-space:nowrap;overflow:hidden;line-height:1.3}
+.hr-v14-category{flex:0 0 auto;font-size:11px;font-weight:800;color:#8A5A45;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.hr-v14-post-info{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:#8A9199}
+.hr-v14-post-title{font-size:16px;font-weight:900;line-height:1.35;color:#18212B;margin:5px 0 2px;letter-spacing:-.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hr-v14-post-body{display:none}
+.hr-v14-tag{display:none}
+.hr-v14-actions{display:flex;align-items:center;gap:12px;margin-top:4px;padding-top:0;border-top:0}
+.hr-v14-action{font-size:11px;padding:0;color:#8A9199}
+.hr-v14-action.on{color:#FF6B35;font-weight:900}
+@media(max-width:760px){
+  .hr-v14-post{padding:9px 10px;margin:2px 0}
+  .hr-v14-compact-meta{gap:7px}
+  .hr-v14-category{max-width:105px}
+  .hr-v14-post-info{font-size:10px}
+  .hr-v14-post-title{font-size:15px;margin-top:4px}
+  .hr-v14-actions{gap:10px}
+}
+</style>
+<style id="habiroute-final-ui-tweaks">
+/* UI-only refinements: denser board list and clearer home navigation. */
+.hr-v14-post{padding:7px 10px;margin:1px 0;border-radius:6px}
+.hr-v14-compact-meta{gap:7px;line-height:1.15}
+.hr-v14-category{font-size:10px;max-width:135px}
+.hr-v14-post-info{font-size:10px}
+.hr-v14-post-title{font-size:14px;line-height:1.25;margin:3px 0 1px;letter-spacing:-.2px}
+.hr-v14-actions{gap:9px;margin-top:2px}
+.hr-v14-action{font-size:10px}
+.hr-home-hobby{border:1px solid #E6E1D8;background:#fff;border-radius:9px;padding:8px 12px;font-weight:800;cursor:pointer}
+.hr-home-hobby.active{background:#18212B;color:#fff;border-color:#18212B}
+@media(max-width:760px){
+  .hr-v14-post{padding:6px 8px;margin:1px 0}
+  .hr-v14-compact-meta{gap:5px}
+  .hr-v14-category{max-width:95px;font-size:9px}
+  .hr-v14-post-info{font-size:9px}
+  .hr-v14-post-title{font-size:13px;margin-top:2px}
+  .hr-v14-actions{gap:8px}
+  .hr-v14-action{font-size:9px}
+}
+</style>
+
+<style id="habiroute-qa-final">
+.hr-v14-post{cursor:pointer}
+.lounge-section{margin:14px 0 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+.lounge-section-title{font-weight:900;padding:13px 14px 3px}.lounge-section-sub{font-size:12px;color:var(--muted);padding:0 14px 10px}.lounge-section-tabs{display:flex;gap:0;overflow:auto}.lounge-section-tabs .lounge-tab{border:0;border-top:1px solid var(--line);background:#fff;padding:11px 14px;font-weight:800;white-space:nowrap}.lounge-section-tabs .lounge-tab:hover{background:#F7F5F0}
+.search-rank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.search-rank{display:flex;gap:10px;align-items:center;border:0;border-bottom:1px solid var(--line);background:#fff;padding:11px 2px;text-align:left}.search-rank .rank{font-weight:900;color:var(--accent);width:22px}
+@media(max-width:600px){.search-rank-list{grid-template-columns:1fr}.container,.page{padding-left:14px;padding-right:14px}.header{padding:0 12px;gap:10px}.nav{gap:0}.nav button{padding:8px 7px;font-size:12px}.logo{font-size:20px}.login{display:none}}
+</style>
+
+<style>
+.home-lounge{margin-top:22px;padding:18px;background:#fff;border:1px solid #E6E1D8;border-radius:14px}
+.home-lounge-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.home-lounge-head h2{margin:4px 0 2px;font-size:21px}
+.hot-lounge-list{border-top:1px solid #eee}
+.hot-lounge-row{width:100%;display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:12px 4px;background:none;border:0;border-bottom:1px solid #eee;text-align:left;cursor:pointer}
+.hot-rank{font-weight:900;color:#FF6B35}.hot-lounge-title{font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hot-lounge-meta{font-size:12px;color:#777}
+@media(max-width:640px){.home-lounge{border-radius:10px;padding:14px}.hot-lounge-row{grid-template-columns:26px 1fr auto;padding:10px 2px}.hot-lounge-meta{font-size:11px}}
+</style>
+<style id="habiroute-search-clean-css">
+#searchPage .search-results-slot{display:block;clear:both;overflow:visible;}
+#searchPage .search-result-row{display:block!important;position:relative!important;clear:both!important;float:none!important;min-height:0!important;height:auto!important;background:#fff;border-top:1px solid #E6E1D8;padding:9px 3px!important;margin:0!important;overflow:hidden!important;cursor:pointer;}
+#searchPage .search-result-row img,#searchPage .search-result-row picture,#searchPage .search-result-row video,#searchPage .search-result-row canvas{display:none!important;width:0!important;height:0!important;}
+#searchPage .search-result-meta{font-size:11px;line-height:1.35;color:#7A7F85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#searchPage .search-result-title{margin-top:3px;font-size:15px;font-weight:800;line-height:1.35;color:#18212B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+</style>
+
+<style id="habiroute-ui-polish">
+/* UI polish: search ranking + post detail spacing/actions */
+.search-rank-list{gap:8px!important;}
+.search-rank{
+  border:1px solid #E6E1D8!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  padding:12px 14px!important;
+  min-height:46px;
+  transition:background .15s,border-color .15s;
+}
+.search-rank:hover{background:#FAF9F6!important;border-color:#D8D2C8!important;}
+.search-rank .rank{width:24px;flex:0 0 24px;}
+
+/* Keep the post body and comments visually separated. */
+.hr-comments-card{
+  margin-top:22px!important;
+  border-radius:12px!important;
+  padding:18px!important;
+}
+.hr-comments-card h3{margin:0 0 16px!important;padding-bottom:12px;border-bottom:1px solid #EEEAE2;}
+.hr-comment{padding:12px 0!important;}
+
+/* Larger, easier-to-hit like/save controls on the post detail page. */
+#communityPage > .card > .hr-v14-actions{
+  margin-top:22px!important;
+  padding-top:14px!important;
+  border-top:1px solid #EEEAE2;
+  gap:10px!important;
+}
+#communityPage > .card > .hr-v14-actions .hr-v14-action{
+  min-width:76px!important;
+  min-height:42px!important;
+  padding:9px 15px!important;
+  border:1px solid #E1DDD5!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  font-size:14px!important;
+  font-weight:700!important;
+}
+#communityPage > .card > .hr-v14-actions .hr-v14-action.on{
+  background:#FFF0E9!important;
+  border-color:#FFD7C7!important;
+}
+@media(max-width:600px){
+  .search-rank-list{gap:7px!important;}
+  .search-rank{padding:11px 12px!important;}
+  .hr-comments-card{margin-top:18px!important;padding:15px!important;}
+  #communityPage > .card > .hr-v14-actions .hr-v14-action{min-height:44px!important;min-width:82px!important;}
+}
+</style>
+
+<style id="hr-rounded-images">
+/* 하비루트 전체 이미지: 목록/검색결과/게시글 상세/사진 미리보기 공통 */
+img { border-radius: 14px !important; overflow: hidden; }
+.photo-preview img { border-radius: 14px !important; }
+</style>
+</head>
+<body>
+<!-- HABIROUTE_V17_NO_BUSINESS: all business/commercial UI hidden -->
+<!-- HABIROUTE: user-first phase. Business/commercial UI intentionally hidden. -->
+
+
+<div id="habirouteTransition" class="habiroute-transition" aria-hidden="true">
+  <div class="habiroute-transition-card">
+    <div class="habiroute-transition-logo">하비루트</div>
+    <div class="habiroute-transition-text">당신의 취미 공간을 준비하고 있어요</div>
+    <div class="habiroute-transition-dots"><span></span><span></span><span></span></div><div class="habiroute-transition-progress"><span></span></div>
+  </div>
+</div>
+
+<header class="header">
+<button type="button" id="logo" class="logo">하비<span>루트</span></button>
+<nav class="nav">
+<button data-nav="home">홈</button><button data-nav="community">커뮤니티</button><button data-nav="search">검색</button><button data-nav="profile">MY</button>
+</nav>
+<button id="notificationBtn" class="header-icon">알림<span id="notifyDot" class="dot hidden"></span></button>
+<button id="loginBtn" class="login">로그인</button>
+</header>
+
+<section id="onboarding" class="onboarding">
+<div id="step1" class="onboard-inner">
+<div class="step">STEP 1 · INTEREST</div>
+<h1>어떤 취미를<br><span class="accent">즐기고 있나요?</span></h1>
+<p class="lead">관심 있는 취미를 <strong>최대 5개</strong>까지 골라주세요.</p>
+<div id="selectionCount" class="selection-count" style="font-weight:800;margin-top:18px">0 / 5</div>
+<div id="hobbyGrid" class="hobby-grid"></div>
+<div class="actions"><button id="skipBtn" class="skip">건너뛰기</button><span class="muted" style="font-size:13px">5개 선택 시 자동 시작</span></div>
+</div>
+</section>
+
+<main id="app">
+<section id="homePage" class="page hidden"></section>
+<section id="communityPage" class="page hidden"></section>
+<section id="detailPage" class="page hidden"></section>
+<section id="writePage" class="page hidden"></section>
+<section id="pricePage" class="page hidden"></section>
+<section id="reviewPage" class="page hidden"></section>
+<section id="guidePage" class="page hidden"></section>
+
+
+<section id="searchPage" class="page hidden"></section>
+
+
+    
+  
+
+<section id="profilePage" class="page hidden">
+<div class="hr-my-real">
+  <div class="hr-my-profile">
+    <div class="hr-avatar">H</div>
+    <div>
+      <div class="hr-my-name">하비루트 이용자</div>
+      <div class="hr-my-email">내 취미와 활동을 관리해보세요.</div>
+    </div>
+  </div>
+
+  <div class="hr-my-section">
+    <div class="hr-my-title">내 등급</div>
+    
+      </div>
+      
+      <div class="hr-my-level"><span>126 XP</span><span>다음 레벨 200 XP</span></div>
+      <div class="hr-my-progress"><i></i></div>
+      <div class="hr-my-hobbies">
+        <span class="hr-my-hobby">캠핑 Lv.5</span>
+        <span class="hr-my-hobby">자동차·이륜차 Lv.3</span>
+        <span class="hr-my-hobby">골프 Lv.2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr-my-section">
+    <div class="hr-my-title">내 활동</div>
+    <div class="hr-my-list">
+      <a class="hr-my-row"><strong>내 게시글</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>내 댓글</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>좋아요</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>저장한 글</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>알림</strong><span>›</span></a>
+    </div>
+  </div>
+
+  <div class="hr-my-section">
+    <div class="hr-my-title">내 취미</div>
+    <div class="hr-my-list">
+      <a class="hr-my-row"><strong>취미 관리</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>취미 추가</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>취미 순서 변경</strong><span>›</span></a>
+    </div>
+  </div>
+
+  <div class="hr-my-section">
+    <div class="hr-my-title">계정 및 지원</div>
+    <div class="hr-my-list">
+      <a class="hr-my-row"><strong>프로필 수정</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>설정</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>고객센터</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>이용약관</strong><span>›</span></a>
+      <a class="hr-my-row"><strong>개인정보처리방침</strong><span>›</span></a>
+      <a class="hr-my-row hr-my-logout"><strong>로그아웃</strong><span>›</span></a>
+    </div>
+  </div>
+</div>
+</section>
+<section id="notificationPage" class="page hidden"></section>
+<section id="savedPage" class="page hidden"></section>
+<section id="dashboardPage" class="page hidden"></section>
+<section id="settingsPage" class="page hidden"></section>
+</main>
+
+<nav class="bottom-nav">
+<button data-bottom="home">홈</button><button data-bottom="community">커뮤니티</button><button data-bottom="write">글쓰기</button><button data-bottom="search">검색</button><button data-bottom="profile">MY</button>
+</nav>
+
+<div id="modal" class="modal hidden"><div id="modalCard" class="modal-card"></div></div>
+<div id="toast" class="toast hidden"></div>
+
+<script>
+(function(){
+"use strict";
+
+const HOBBIES=["캠핑","골프","낚시","등산·트레킹","자전거","러닝","자동차·이륜차","사진·영상","DIY·공구","게임","음악·악기","반려동물","여행","요리·베이킹","스키·스노보드","서핑","클라이밍","테니스","배드민턴","축구·풋살","농구","야구","볼링","당구","수영","헬스·피트니스","댄스","미술·드로잉","공예","프라모델·피규어","독서","영화·드라마","패션·스타일"];
+
+const seedPosts=[
+{id:1,hobby:"자동차·이륜차",topic:"입문",title:"바이크 처음 사려고 하는데 600~700cc 괜찮을까요?",body:"처음 입문하는 입장에서 실제 유지비와 추천 모델이 궁금합니다.",user:"라이더초보",views:184,likes:24,comments:["입문이면 보험료까지 같이 계산해보세요.","처음이면 시승부터 해보는 게 좋아요."]},
+{id:2,hobby:"자동차·이륜차",topic:"가격비교",title:"타이어 교체 실제로 얼마 정도 나왔나요?",body:"차종과 타이어 브랜드별 실제 지출 가격을 공유해주세요.",user:"주말라이더",views:141,likes:17,comments:["앞뒤 세트 38만원에 했어요.","브랜드에 따라 차이가 꽤 큽니다."]},
+{id:3,hobby:"자동차·이륜차",topic:"후기",title:"이번에 정비 맡겨봤는데 생각보다 괜찮았습니다.",body:"정비 항목과 가격을 같이 적어봤습니다.",user:"바이크생활",views:112,likes:14,comments:[]},
+{id:4,hobby:"캠핑",topic:"입문",title:"2인 캠핑 처음인데 꼭 필요한 장비만 알려주세요.",body:"처음부터 너무 많이 사고 싶지는 않습니다.",user:"캠핑시작",views:156,likes:20,comments:["텐트와 침낭부터 보세요."]},
+{id:5,hobby:"캠핑",topic:"가격비교",title:"이번에 산 텐트 가격 공유합니다.",body:"같은 모델을 알아보는 분들께 도움이 되길 바랍니다.",user:"캠핑러",views:98,likes:11,comments:[]},
+{id:6,hobby:"골프",topic:"입문",title:"골프 처음 시작할 때 클럽은 어떻게 맞추나요?",body:"레슨부터 받아야 할지 장비부터 사야 할지 고민입니다.",user:"백돌이",views:121,likes:18,comments:[]},
+{id:7,hobby:"골프",topic:"후기",title:"초보 레슨 3개월 후기",body:"처음 시작한 분들에게 참고가 될 것 같아 남깁니다.",user:"스윙맨",views:72,likes:9,comments:[]},
+{id:8,hobby:"낚시",topic:"입문",title:"바다낚시 처음이면 어떤 장비가 필요할까요?",body:"주말에 처음 가보려고 합니다.",user:"주말낚시",views:98,likes:13,comments:[]}
+];
+
+let posts=load("tuh_posts",seedPosts);
+let selected=load("tuh_hobbies",[]);
+let saved=load("tuh_saved",[]);
+let liked=load("tuh_liked",[]);
+let notifications=load("tuh_notifications",[{id:1,text:"하비루트에 오신 것을 환영합니다.",read:false},{id:2,text:"내 취미에 새로운 글이 올라왔습니다.",read:false}]);
+let currentHobby=selected[0]||"전체";
+let currentTopic="전체";
+let communityQuery="";
+let currentPostId=null;
+let currentLoungeBoard=null;
+let user=load("tuh_user",{name:"하비루트 회원"});
+let currentPage=null;
+
+const $=id=>document.getElementById(id);
+function load(k,f){try{const x=localStorage.getItem(k);return x?JSON.parse(x):f}catch(e){return f}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");clearTimeout(window.__toast);window.__toast=setTimeout(()=>$("toast").classList.add("hidden"),1800)}
+function updateNavState(){
+  const map={home:"home",community:"community",search:"search",profile:"profile"};
+  document.querySelectorAll("[data-nav]").forEach(b=>b.classList.toggle("active",b.dataset.nav===currentPage));
+  document.querySelectorAll("[data-bottom]").forEach(b=>{
+    const key=b.dataset.bottom==="write"?"community":(b.dataset.bottom==="profile"?"profile":b.dataset.bottom);
+    b.classList.toggle("active",key===currentPage);
+  });
+}
+function page(id,navKey){
+  document.querySelectorAll("#app>.page").forEach(x=>x.classList.add("hidden"));
+  const target=$(id);
+  if(target) target.classList.remove("hidden");
+  const fallback={homePage:"home",communityPage:"community",searchPage:"search",profilePage:"profile",savedPage:"profile",notificationPage:"profile",settingsPage:"profile",writePage:"community",detailPage:"community"};
+  currentPage=navKey!==undefined?navKey:(fallback[id]||null);
+  updateNavState();
+  window.scrollTo(0,0);
+}
+function enterApp(){
+  const tr=document.getElementById("habirouteTransition");
+  if(tr){ tr.classList.remove("show"); tr.setAttribute("aria-hidden","true"); }
+  $("onboarding").classList.add("hidden");
+  $("app").style.display="block";
+  currentHobby=selected[0]||"전체";
+  try{ renderHome(); }catch(e){ console.error("하비루트 렌더 오류",e); page("homePage","home"); }
+}
+
+function buildOnboarding(){
+ const grid=$("hobbyGrid");
+ const count=$("selectionCount");
+ HOBBIES.forEach(h=>{
+  const b=document.createElement("button");b.className="hobby";b.textContent=h;
+  b.addEventListener("click",()=>{
+   if(selected.includes(h)){
+    selected=selected.filter(x=>x!==h);b.classList.remove("selected");
+   }else{
+    if(selected.length>=5){toast("취미는 최대 5개까지 선택할 수 있어요.");return}
+    selected.push(h);b.classList.add("selected");
+   }
+   count.textContent=selected.length+" / 5";
+   if(selected.length===5){
+  save("tuh_hobbies",selected);
+  currentHobby=selected[0];
+  if(typeof showHabirouteTransition==="function") showHabirouteTransition();
+  setTimeout(function(){ enterApp(); },2000);
+}
+  });
+  grid.appendChild(b);
+ });
+ if(selected.length){
+  grid.querySelectorAll(".hobby").forEach(b=>{if(selected.includes(b.textContent))b.classList.add("selected")});
+  count.textContent=Math.min(selected.length,5)+" / 5";
+ }
+}
+function skip(){selected=[];save("tuh_hobbies",selected);enterApp()}
+
+function openHobbyAdd(){
+ const available=HOBBIES.filter(h=>!selected.includes(h));
+ $("modalCard").innerHTML='<h2>취미 추가</h2><p class="muted">추가할 취미를 골라주세요. (최대 5개)</p><div class="hobby-grid" id="addHobbyGrid">'+available.map(h=>'<button class="hobby" data-add-hobby="'+esc(h)+'">'+esc(h)+'</button>').join("")+'</div><div class="modal-actions"><button class="secondary" id="addHobbyCancel">닫기</button><button class="primary" id="addHobbySave">추가하기</button></div>';
+ $("modal").classList.remove("hidden");
+ $("modal").querySelectorAll("[data-add-hobby]").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("selected")));
+ $("addHobbyCancel").addEventListener("click",closeModal);
+ $("addHobbySave").addEventListener("click",()=>{
+   $("modal").querySelectorAll("[data-add-hobby].selected").forEach(b=>{if(!selected.includes(b.dataset.addHobby)&&selected.length<5)selected.push(b.dataset.addHobby)});
+   save("tuh_hobbies",selected);closeModal();currentHobby=selected[selected.length-1]||currentHobby;renderHome();
+ });
+}
+
+
+function normalizeTopic(t){
+  if(t==="입문" || t==="질문" || t==="입문·질문") return "입문·질문";
+  return t||"자유";
+}
+function topicForFilter(t){
+  if(t==="입문·질문") return p=>p.topic==="입문"||p.topic==="질문"||p.topic==="입문·질문";
+  return p=>p.topic===t;
+}
+function normalizeComments(p){
+  if(!Array.isArray(p.comments)) p.comments=[];
+  p.comments=p.comments.map((c,i)=>{
+    if(typeof c==='string') return {id:'c'+p.id+'_'+i,text:c,user:'하비루트 회원',replies:[]};
+    return {id:c.id||('c'+p.id+'_'+i),text:c.text||'',user:c.user||'하비루트 회원',replies:Array.isArray(c.replies)?c.replies:[]};
+  });
+  return p.comments;
+}
+function commentCount(p){
+  const cs=normalizeComments(p);
+  return cs.length + cs.reduce((n,c)=>n+(Array.isArray(c.replies)?c.replies.length:0),0);
+}
+function feedCard(p){
+  const isSaved=saved.includes(p.id), isLiked=liked.includes(p.id);
+  const comments=normalizeComments(p);
+  const author=esc(p.user||"하비루트 회원");
+  const time=esc(p.time||"최근");
+  return '<article class="hr-v14-post hr-post-clickable" data-post-id="'+p.id+'" role="button" tabindex="0" aria-label="'+esc(p.title||"게시글 열기")+'">'+
+    '<div class="hr-v14-compact-meta">'+
+      '<span class="hr-v14-category">'+esc(p.hobby||"취미")+' · '+esc(normalizeTopic(p.topic))+'</span>'+ 
+      '<span class="hr-v14-post-info">'+author+' · '+time+' · 조회 '+(p.views||0)+' · 추천 '+(p.likes||0)+' · 댓글 '+commentCount(p)+'</span>'+ 
+    '</div>'+ 
+    '<div class="hr-v14-post-title">'+esc(p.title||"제목 없음")+'</div>'+ 
+    '<div class="hr-v14-actions">'+
+      '<button class="hr-v14-action '+(isLiked?'on':'')+'" data-like="'+p.id+'">'+(isLiked?'♥':'♡')+' 추천</button>'+ 
+      '<button class="hr-v14-action" data-comment="'+p.id+'">댓글 '+commentCount(p)+'</button>'+ 
+      '<button class="hr-v14-action '+(isSaved?'on':'')+'" data-save="'+p.id+'">'+(isSaved?'★ 저장됨':'☆ 저장')+'</button>'+ 
+    '</div></article>';
+}
+function bindFeedActions(root){
+  if(!root)return;
+  root.querySelectorAll("[data-post-id]").forEach(card=>{
+    const open=()=>openPostDetail(Number(card.dataset.postId));
+    card.addEventListener("click",e=>{
+      if(e.target.closest("button,a,input,textarea,select")) return;
+      open();
+    });
+    card.addEventListener("keydown",e=>{
+      if((e.key==="Enter"||e.key===" ") && !e.target.closest("button,a,input,textarea,select")){e.preventDefault();open();}
+    });
+  });
+  root.querySelectorAll("[data-like]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();
+    const id=Number(b.dataset.like),i=liked.indexOf(id);
+    if(i>=0){liked.splice(i,1)}else{liked.push(id)}
+    const p=posts.find(x=>x.id===id);if(p)p.likes=Math.max(0,(p.likes||0)+(i>=0?-1:1));
+    save("tuh_liked",liked);save("tuh_posts",posts);renderCommunityFeed();
+  }));
+  root.querySelectorAll("[data-save]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();
+    const id=Number(b.dataset.save),i=saved.indexOf(id);
+    if(i>=0){saved.splice(i,1)}else{saved.push(id)}
+    save("tuh_saved",saved);renderCommunityFeed();
+  }));
+  root.querySelectorAll("[data-comment]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation();
+    openPostDetail(Number(b.dataset.comment));
+  }));
+}
+function openPostDetail(id){
+  const p=posts.find(x=>x.id===id);if(!p)return;
+  p.views=(Number(p.views)||0)+1;
+  save("tuh_posts",posts);
+  currentPostId=id;
+  page("communityPage");
+  const comments=normalizeComments(p);
+  const commentHtml=comments.length?comments.map(c=>{
+    const replies=Array.isArray(c.replies)?c.replies:[];
+    return '<div class="hr-comment" data-comment-id="'+esc(c.id)+'">'+
+      '<div class="hr-comment-main"><b>'+esc(c.user)+'</b><div class="hr-comment-text">'+esc(c.text)+'</div></div>'+ 
+      '<button class="hr-reply-toggle" data-reply-toggle="'+esc(c.id)+'">답글 '+(replies.length?replies.length:'달기')+'</button>'+ 
+      '<div class="hr-replies">'+replies.map(r=>'<div class="hr-reply"><b>'+esc(r.user||'하비루트 회원')+'</b><div>'+esc(r.text||'')+'</div></div>').join('')+'</div>'+ 
+      '<div class="hr-reply-form" id="replyForm_'+esc(c.id)+'"><input data-reply-input="'+esc(c.id)+'" placeholder="답글을 입력하세요"><button class="secondary" data-reply-submit="'+esc(c.id)+'">등록</button></div>'+ 
+    '</div>';
+  }).join(''):'<p class="muted">첫 댓글을 남겨보세요.</p>';
+  $("communityPage").innerHTML=
+    '<div class="page-top"><div><div class="step">POST</div><h1>게시글</h1></div><button class="secondary" id="detailBack">← 목록</button></div>'+ 
+    '<article class="card"><div class="small">'+esc(p.hobby)+' · '+esc(normalizeTopic(p.topic))+'</div>'+ 
+    '<h2>'+esc(p.title)+'</h2><p class="muted">'+esc(p.user)+' · 조회 '+(p.views||0)+'</p>'+ 
+    '<div style="line-height:1.8;white-space:pre-wrap">'+esc(p.body)+'</div>'+((Array.isArray(p.images)&&p.images.length)?'<div class="photo-preview" style="margin-top:16px">'+p.images.map(src=>'<img src="'+src+'" alt="게시글 사진">').join('')+'</div>':'')+
+    '<div class="hr-v14-actions"><button class="hr-v14-action '+(liked.includes(id)?'on':'')+'" id="detailLike">'+(liked.includes(id)?'♥':'♡')+' '+(p.likes||0)+'</button>'+ 
+    '<button class="hr-v14-action '+(saved.includes(id)?'on':'')+'" id="detailSave">'+(saved.includes(id)?'★ 저장됨':'☆ 저장')+'</button></div></article>'+ 
+    '<div class="card hr-comments-card"><h3>댓글 '+commentCount(p)+'</h3>'+commentHtml+
+    '<div class="hr-comment-write"><input id="newComment" placeholder="댓글을 입력하세요"><button class="primary" id="commentSend" style="width:auto;margin:0">등록</button></div></div>';
+  $("detailBack").addEventListener("click",()=>renderCommunity(currentHobby));
+  $("detailLike").addEventListener("click",()=>{const i=liked.indexOf(id);if(i>=0)liked.splice(i,1);else liked.push(id);p.likes=Math.max(0,(p.likes||0)+(i>=0?-1:1));save("tuh_liked",liked);save("tuh_posts",posts);openPostDetail(id)});
+  $("detailSave").addEventListener("click",()=>{const i=saved.indexOf(id);if(i>=0)saved.splice(i,1);else saved.push(id);save("tuh_saved",saved);openPostDetail(id)});
+  $("commentSend").addEventListener("click",()=>{
+    const v=$("newComment").value.trim();if(!v)return;
+    normalizeComments(p);p.comments.push({id:'c'+Date.now(),text:v,user:user.name||'하비루트 회원',replies:[]});p.views=(p.views||0)+1;save("tuh_posts",posts);openPostDetail(id);
+  });
+  $("communityPage").querySelectorAll('[data-reply-toggle]').forEach(btn=>btn.addEventListener('click',()=>{
+    const form=$("replyForm_"+btn.dataset.replyToggle); if(form) form.classList.toggle('show');
+  }));
+  $("communityPage").querySelectorAll('[data-reply-submit]').forEach(btn=>btn.addEventListener('click',()=>{
+    const cid=btn.dataset.replySubmit, input=$("communityPage").querySelector('[data-reply-input="'+CSS.escape(cid)+'"]');
+    const v=input&&input.value.trim(); if(!v)return;
+    const c=comments.find(x=>x.id===cid); if(!c)return;
+    c.replies=c.replies||[]; c.replies.push({id:'r'+Date.now(),text:v,user:user.name||'하비루트 회원'});
+    save("tuh_posts",posts); openPostDetail(id);
+  }));
+}
+async function compressImage(file){
+ return new Promise(resolve=>{
+   const reader=new FileReader();
+   reader.onerror=()=>resolve(null);
+   reader.onload=()=>{
+     const img=new Image();
+     img.onload=()=>{
+       const max=1600, scale=Math.min(1,max/Math.max(img.width,img.height));
+       const canvas=document.createElement("canvas");
+       canvas.width=Math.max(1,Math.round(img.width*scale)); canvas.height=Math.max(1,Math.round(img.height*scale));
+       const ctx=canvas.getContext("2d"); ctx.drawImage(img,0,0,canvas.width,canvas.height);
+       resolve(canvas.toDataURL("image/jpeg",0.82));
+     };
+     img.onerror=()=>resolve(null); img.src=reader.result;
+   };
+   reader.readAsDataURL(file);
+ });
+}
+
+function renderWrite(topic){
+  page("writePage");
+  const initial=topic?normalizeTopic(topic):"자유";
+  $("writePage").innerHTML=
+    '<div class="page-top"><div><div class="step">WRITE</div><h1>새 글 작성</h1><p class="muted">내 취미 경험과 정보를 자유롭게 공유해보세요.</p></div></div>'+
+    '<div class="form">'+
+    '<div class="field"><label>취미</label><select id="writeHobby">'+HOBBIES.map(h=>'<option '+(h===currentHobby?'selected':'')+'>'+esc(h)+'</option>').join("")+'</select></div>'+
+    '<div class="field"><label>카테고리</label><select id="writeTopic">'+["입문·질문","정보","후기","자랑하기","자유"].map(t=>'<option '+(t===initial?'selected':'')+'>'+t+'</option>').join("")+'</select></div>'+
+    '<div class="field"><label>제목</label><input id="writeTitle" maxlength="80" placeholder="제목을 입력하세요"></div>'+
+    '<div class="field"><label>내용</label><textarea id="writeBody" maxlength="3000" placeholder="경험, 질문, 정보 등을 자세히 적어주세요."></textarea></div>'+
+    '<div class="field"><label>사진</label><input id="writeImages" type="file" accept="image/*" multiple><div id="writeImagePreview" class="photo-preview"></div></div>'+
+    '<div class="form-actions"><button class="secondary" id="writeCancel">취소</button><button class="primary" id="writePublish">등록하기</button></div></div>';
+  const imageInput=$("writeImages"), imagePreview=$("writeImagePreview");
+  imageInput.addEventListener("change",()=>{ imagePreview.innerHTML=""; Array.from(imageInput.files||[]).slice(0,8).forEach(file=>{ if(!file.type.startsWith("image/")) return; const url=URL.createObjectURL(file); const img=document.createElement("img"); img.src=url; img.onload=()=>URL.revokeObjectURL(url); imagePreview.appendChild(img); }); });
+  $("writeCancel").addEventListener("click",()=>renderCommunity(currentHobby));
+  $("writePublish").addEventListener("click",async()=>{
+    const title=$("writeTitle").value.trim(),body=$("writeBody").value.trim();
+    if(!title||!body){toast("제목과 내용을 입력해주세요.");return}
+    const hobby=$("writeHobby").value,cat=$("writeTopic").value;
+    const files=Array.from($("writeImages").files||[]).filter(f=>f.type.startsWith("image/")).slice(0,8);
+    const images=await Promise.all(files.map(file=>compressImage(file)));
+    posts.unshift({id:Date.now(),hobby:hobby,topic:cat,title:title,body:body,user:user.name||"하비루트 회원",views:0,likes:0,comments:[],images:images.filter(Boolean),time:"방금 전"});
+    try{save("tuh_posts",posts)}catch(err){posts.shift();toast("사진 용량이 너무 커서 저장하지 못했습니다.");return}
+    currentHobby=hobby;currentTopic="전체";
+    toast("글이 등록되었습니다.");renderCommunity(hobby);
+  });
+}
+
+function renderHome(){
+ page("homePage","home");
+ currentTopic="전체";
+ const mine=selected.length?selected:["취미"];
+ const pool=posts.filter(p=>selected.length?selected.includes(p.hobby):true);
+ const recent=pool.slice(0,5);
+ const hobbyCounts={};
+ posts.forEach(p=>{hobbyCounts[p.hobby]=(hobbyCounts[p.hobby]||0)+1});
+ const popular=HOBBIES.map(h=>({hobby:h,count:hobbyCounts[h]||0})).sort((a,b)=>b.count-a.count).slice(0,8);
+ const discoveryBase=selected.length?selected.slice(0,2):["캠핑","러닝"];
+ const discovery=discoveryBase.map((h,i)=>({
+   hobby:h,
+   title:i===0?"처음 시작한다면 이것부터":"이 취미, 생각보다 재미있어요",
+   desc:i===0?"입문할 때 알아두면 좋은 기본 정보와 실제 경험을 확인해보세요.":"비용·장비·시작 방법부터 다른 사람들의 경험까지 가볍게 살펴보세요."
+ }));
+ const recentHtml=recent.length?recent.map(p=>'<div class="hr-recent-row" data-home-post="'+p.id+'"><span class="hr-recent-cat">'+esc(p.hobby)+'</span><span class="hr-recent-title">'+esc(p.title)+'</span><span class="hr-recent-meta">'+esc(p.user||"하비루트 회원")+' · '+(p.views||0)+'회</span></div>').join(""):'<div class="hr-home-empty">아직 올라온 이야기가 없습니다. 커뮤니티에서 첫 이야기를 시작해보세요.</div>';
+ const discoveryHtml=discovery.map(d=>'<article class="hr-discovery-card" data-home-hobby="'+esc(d.hobby)+'"><div class="hr-discovery-label">TODAY · '+esc(d.hobby)+'</div><h3>'+esc(d.title)+'</h3><p>'+esc(d.desc)+'</p><div class="hr-discovery-meta">'+((hobbyCounts[d.hobby]||0))+'개의 이야기 보기 →</div></article>').join("");
+ const mineHtml=selected.length?selected.map(x=>'<button type="button" class="hr-home-hobby active" data-mine-hobby="'+esc(x)+'">'+esc(x)+'</button>').join(""):'<span class="hr-home-empty-hobby">아직 추가한 취미가 없어요.</span>';
+ const popularHtml=popular.map(x=>'<button type="button" class="hr-popular" data-popular-hobby="'+esc(x.hobby)+'"><strong>'+esc(x.hobby)+'</strong><span>'+x.count+'개 이야기</span></button>').join("");
+ $("homePage").innerHTML=
+ '<div class="hr-home">'+
+ '<section class="hr-home-hero">'+
+ '<div class="hr-home-kicker">HABIROUTE · HOBBY DISCOVERY</div>'+ 
+ '<h1>오늘, 새로운 취미 하나를<br>발견해보세요.</h1>'+ 
+ '<p>좋아하는 취미를 찾고, 직접 해보고, 사람들과 경험을 나누는 곳.</p>'+ 
+ '<button class="hr-home-add-hobby" id="homeAddHobby">+ 취미 추가</button>'+ 
+ '</section>'+ 
+ '<section class="hr-home-section"><div class="hr-home-section-head"><div><h2>내 취미</h2><p>관심 있는 취미를 추가해두면 홈에서 바로 만날 수 있어요.</p></div></div><div class="hr-home-hobbies">'+mineHtml+'</div></section>'+ 
+ '<section class="hr-home-section"><div class="hr-home-section-head"><div><h2>오늘의 취미 발견</h2><p>하비루트에서 새로운 취미를 하나 골라보세요.</p></div></div><div class="hr-discovery-grid">'+discoveryHtml+'</div></section>'+ 
+ '<section class="hr-home-section"><div class="hr-home-section-head"><div><h2>핫한 관심사</h2><p>지금 하비루트에서 관심을 받고 있는 취미입니다.</p></div></div><div class="hr-popular-grid">'+popularHtml+'</div></section>'+
+ '<section class="home-lounge"><div class="home-lounge-head"><div><div class="step">HABIROUTE LOUNGE</div><h2>하비루트 라운지</h2><p class="muted">지금 가장 많이 읽히는 글 TOP 5</p></div></div><div id="homeHotLounge"></div></section>'+
+ '</div>';
+ $("homeAddHobby").addEventListener("click",openHobbyAdd);
+ 
+ $("homePage").querySelectorAll("[data-mine-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.mineHobby;renderCommunity(currentHobby)}));
+ $("homePage").querySelectorAll("[data-home-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.homeHobby;renderCommunity(currentHobby)}));
+ $("homePage").querySelectorAll("[data-popular-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.popularHobby;renderCommunity(currentHobby)}));
+ const hotLounge=posts.slice().sort((a,b)=>(Number(b.views)||0)-(Number(a.views)||0)).slice(0,5);
+ $("homeHotLounge").innerHTML=hotLounge.length?'<div class="hot-lounge-list">'+hotLounge.map((p,i)=>'<button class="hot-lounge-row" data-hot-post="'+p.id+'"><span class="hot-rank">'+(i+1)+'</span><span class="hot-lounge-title">'+esc(p.title)+'</span><span class="hot-lounge-meta">조회 '+(p.views||0)+'</span></button>').join('')+'</div>':'<p class="muted">아직 인기 글이 없습니다.</p>';
+ $("homePage").querySelectorAll("[data-hot-post]").forEach(b=>b.addEventListener("click",()=>openPostDetail(Number(b.dataset.hotPost))));
+ $("homePage").querySelectorAll("[data-home-post]").forEach(b=>b.addEventListener("click",()=>openPostDetail(Number(b.dataset.homePost))));
+}
+function renderHomeFeed(){
+ const arr=posts.filter(p=>selected.length?selected.includes(p.hobby):true).slice(0,5);
+ $("homeFeed").innerHTML=arr.length?arr.map(feedCard).join(""):'<div class="card"><p class="muted">아직 글이 없습니다.</p></div>';
+ bindFeedActions($("homeFeed"));
+}
+
+function renderCommunity(hobby=currentHobby){
+ currentHobby=hobby;currentTopic="전체";communityQuery="";page("communityPage");
+ const mine=selected.length?selected:["전체"];
+ const topics=["전체","입문·질문","정보","후기","자랑하기","자유"];
+ $("communityPage").innerHTML=
+ '<div class="page-top"><div><div class="step">HABIT ROUTE</div><h1>'+esc(hobby==="전체"?"전체 취미":hobby)+'</h1><p class="muted">관심 취미의 이야기를 바로 확인하세요.</p></div><button class="primary" id="writeCommunity">글쓰기</button></div>'+ 
+ '<div class="searchbar community-search"><input id="communitySearch" value="" placeholder="게시글 제목을 검색하세요"><button class="secondary" id="communitySearchBtn">검색</button></div>'+ 
+ '<div class="my-tabs">'+mine.map(x=>'<button class="my-tab '+(x===hobby?'active':'')+'" data-m="'+esc(x)+'">'+esc(x)+'</button>').join("")+'<button class="my-tab" id="addHobbyTab">+ 취미</button></div>'+ 
+ '<div id="topicTabs" class="topic-tabs">'+topics.map(x=>'<button class="topic '+(x===currentTopic?'active':'')+'" data-topic="'+esc(x)+'">'+esc(x)+'</button>').join("")+'</div>'+
+ '<div id="communityFeed"></div>'+ 
+ '';
+ $("communityPage").querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>renderCommunity(b.dataset.m)));
+ $("addHobbyTab").addEventListener("click",openHobbyAdd);
+ $("communityPage").querySelectorAll("[data-topic]").forEach(b=>b.addEventListener("click",()=>{currentTopic=b.dataset.topic; renderCommunityFeed()}));
+ $("writeCommunity").addEventListener("click",()=>renderWrite(currentTopic==="전체"?null:currentTopic));
+ $("communitySearchBtn").addEventListener("click",()=>{communityQuery=$("communitySearch").value.trim();renderCommunityFeed()});
+ $("communitySearch").addEventListener("keydown",e=>{if(e.key==="Enter"){communityQuery=e.target.value.trim();renderCommunityFeed()}});
+ renderCommunityFeed();
+}
+function renderCommunityFeed(){
+ const q=(communityQuery||"").toLowerCase();
+ const arr=posts.filter(p=>(currentHobby==="전체"||p.hobby===currentHobby)&&(currentTopic==="전체"||topicForFilter(currentTopic)(p))&&(!q||String(p.title||"").toLowerCase().includes(q)));
+ $("communityPage").querySelectorAll("[data-topic]").forEach(b=>b.classList.toggle("active",b.dataset.topic===currentTopic));
+ if($("feedTitle")) $("feedTitle").textContent=currentTopic==="전체"?"최신글":currentTopic;
+ if($("feedCount")) $("feedCount").textContent=arr.length+"개";
+ if($("communitySearch")) $("communitySearch").value=communityQuery;
+ $("communityFeed").innerHTML=arr.length?arr.map(feedCard).join(""):'<div class="card"><p class="muted">아직 이 카테고리의 글이 없습니다.</p><button class="secondary" id="emptyWrite">첫 글 작성하기</button></div>';
+ bindFeedActions($("communityFeed"));
+ if($("emptyWrite"))$("emptyWrite").addEventListener("click",()=>renderWrite(currentTopic==="전체"?null:currentTopic));
+}
+function recordSearch(q){
+  q=String(q||"").trim(); if(!q)return;
+  const counts=load("tuh_search_counts",{});
+  counts[q]=(Number(counts[q])||0)+1;
+  save("tuh_search_counts",counts);
+  saveRecentSearch(q);
+}
+function getRecentSearches(){
+  const arr=load("tuh_recent_searches",[]);
+  return Array.isArray(arr)?arr.filter(Boolean).slice(0,10):[];
+}
+function saveRecentSearch(q){
+  q=String(q||"").trim(); if(!q)return;
+  const arr=getRecentSearches().filter(x=>String(x).toLowerCase()!==q.toLowerCase());
+  arr.unshift(q);
+  save("tuh_recent_searches",arr.slice(0,10));
+}
+function getPopularSearches(){
+  const counts=load("tuh_search_counts",{});
+  const defaults=["캠핑","러닝","등산","사진","자전거","낚시","골프","자동차","요리","헬스"];
+  const all=[...new Set([...Object.keys(counts||{}),...defaults])];
+  return all.sort((a,b)=>(Number(counts[b])||0)-(Number(counts[a])||0)||defaults.indexOf(a)-defaults.indexOf(b)).slice(0,10);
+}
+function searchResultCard(p){
+  return '<article class="search-result-row" data-search-post-id="'+esc(p.id)+'" role="button" tabindex="0">'+
+    '<div class="search-result-meta">'+esc(p.hobby||"취미")+' · '+esc(normalizeTopic(p.topic))+' · '+esc(p.user||"하비루트 회원")+' · '+esc(p.time||"최근")+' · 조회 '+(Number(p.views)||0)+' · 추천 '+(Number(p.likes)||0)+' · 댓글 '+commentCount(p)+'</div>'+ 
+    '<div class="search-result-title">'+esc(p.title||"제목 없음")+'</div>'+ 
+    '</article>';
+}
+function renderRecentSearchInline(){
+  const box=$("recentSearchInlineList");
+  if(!box)return;
+  const recent=getRecentSearches();
+  box.innerHTML=recent.length?recent.map(q=>'<button class="recent-inline-chip" type="button" data-recent-search="'+esc(q)+'">'+esc(q)+'</button>').join(""):'<span class="muted">최근 검색어가 없습니다.</span>';
+  box.querySelectorAll("[data-recent-search]").forEach(b=>b.addEventListener("click",()=>{
+    const input=$("globalSearch"); if(!input)return;
+    input.value=b.dataset.recentSearch||"";
+    runGlobalSearch();
+  }));
+}
+function renderSearch(){
+  page("searchPage","search");
+  const popularHobbies=(typeof HOBBIES!=="undefined"?HOBBIES:[]).slice(0,12);
+  const popularSearches=getPopularSearches();
+  const recent=getRecentSearches();
+  const hobbyHtml=popularHobbies.map(h=>'<button class="search-chip" type="button" data-search-hobby="'+esc(h)+'">'+esc(h)+'</button>').join("");
+  const popHtml=popularSearches.map((q,i)=>'<button class="search-rank" type="button" data-popular-search="'+esc(q)+'"><span class="rank">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(q)+'</span></button>').join("");
+  const recentHtml=recent.length?recent.map(q=>'<button class="recent-inline-chip" type="button" data-recent-search="'+esc(q)+'">'+esc(q)+'</button>').join(""):'<span class="muted">최근 검색어가 없습니다.</span>';
+  $("searchPage").innerHTML=
+    '<div class="page-top"><div><div class="step">SEARCH</div><h1>검색</h1><p class="muted">하비루트의 취미와 게시글을 찾아보세요.</p></div></div>'+ 
+    '<div class="searchbar"><input id="globalSearch" autocomplete="off" placeholder="검색어를 입력하세요"><button class="primary" id="globalSearchBtn" type="button">검색</button></div>'+ 
+    '<div id="searchResults" class="search-results-slot"></div>'+ 
+    '<section class="search-panel"><div class="search-panel-head"><h2>인기 취미</h2><span class="small">지금 많이 보는 취미</span></div><div class="search-chip-wrap">'+hobbyHtml+'</div></section>'+ 
+    '<section class="search-panel"><div class="search-panel-head"><h2>인기 검색어</h2><span class="small">많이 검색된 키워드</span></div><div class="search-rank-list">'+popHtml+'</div></section>';
+  $("globalSearchBtn").addEventListener("click",runGlobalSearch);
+  $("globalSearch").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runGlobalSearch();}});
+  $("searchPage").querySelectorAll("[data-popular-search]").forEach(b=>b.addEventListener("click",()=>{
+    $("globalSearch").value=b.dataset.popularSearch||""; runGlobalSearch();
+  }));
+  $("searchPage").querySelectorAll("[data-recent-search]").forEach(b=>b.addEventListener("click",()=>{
+    $("globalSearch").value=b.dataset.recentSearch||""; runGlobalSearch();
+  }));
+  $("searchPage").querySelectorAll("[data-search-hobby]").forEach(b=>b.addEventListener("click",()=>{
+    $("globalSearch").value=b.dataset.searchHobby||""; runGlobalSearch();
+  }));
+}
+function runGlobalSearch(){
+  const input=$("globalSearch"),box=$("searchResults");
+  if(!input||!box)return;
+  const raw=String(input.value||"").trim();
+  if(!raw){box.innerHTML='<div class="search-empty">검색어를 입력해주세요.</div>';return;}
+  recordSearch(raw);
+  const q=raw.toLowerCase();
+  const source=Array.isArray(posts)?posts:load("tuh_posts",seedPosts);
+  const results=source.filter(p=>(String(p.title||"")+" "+String(p.body||"")+" "+String(p.hobby||"")+" "+String(normalizeTopic(p.topic)||"")).toLowerCase().includes(q));
+  box.innerHTML='<div class="search-results-head">검색 결과 <strong>'+results.length+'</strong>건</div>'+
+    (results.length?results.map(searchResultCard).join(""):'<div class="search-empty">"'+esc(raw)+'"에 대한 검색 결과가 없습니다.</div>');
+  box.querySelectorAll("[data-search-post-id]").forEach(card=>{
+    const open=()=>openPostDetail(Number(card.dataset.searchPostId));
+    card.addEventListener("click",open);
+    card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+  });
+  // 검색어별 횟수 변화가 반영되도록 인기 검색어 순위도 즉시 갱신한다.
+  const rankList=$("searchPage").querySelector(".search-rank-list");
+  if(rankList){
+    rankList.innerHTML=getPopularSearches().map((qv,i)=>'<button class="search-rank" type="button" data-popular-search="'+esc(qv)+'"><span class="rank">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(qv)+'</span></button>').join("");
+    rankList.querySelectorAll("[data-popular-search]").forEach(b=>b.addEventListener("click",()=>{
+      $("globalSearch").value=b.dataset.popularSearch||""; runGlobalSearch();
+    }));
+  }
+}
+function renderProfile(){
+ page("profilePage","profile");
+ const mine=selected.length?selected:["등록된 취미 없음"];
+ $("profilePage").innerHTML='<div class="page-top"><div><div class="step">MY PAGE</div><h1>마이페이지</h1></div><button class="secondary" id="editProfile">프로필 수정</button></div>'+
+ '<div class="card"><h2 style="margin:0 0 5px">'+esc(user.name||"하비루트 회원")+'</h2><p class="muted" style="margin:0">내 취미와 활동을 관리해보세요.</p></div>'+
+ '<div class="grid3" style="margin-top:14px"><div class="card"><span class="small">작성 글</span><h2>'+posts.filter(p=>p.user===user.name).length+'</h2></div><div class="card"><span class="small">저장</span><h2>'+saved.length+'</h2></div><div class="card"><span class="small">좋아요</span><h2>'+liked.length+'</h2></div></div>'+
+ '<section class="hr-my-section"><div class="hr-my-title">내 취미</div><div class="pills">'+mine.map(h=>'<span class="pill">'+esc(h)+'</span>').join('')+'</div><div style="margin-top:12px"><button class="secondary" id="profileAddHobby">+ 취미 추가</button></div></section>'+
+ '<div class="menu-list" style="margin-top:18px"><button class="menu-row" id="savedMenu">저장한 글 <span>›</span></button><button class="menu-row" id="notifyMenu">알림 <span>›</span></button><button class="menu-row" id="settingMenu">설정 <span>›</span></button></div>';
+ $("editProfile").addEventListener("click",openProfileEdit);
+ $("profileAddHobby").addEventListener("click",openHobbyAdd);
+ $("savedMenu").addEventListener("click",renderSaved);$("notifyMenu").addEventListener("click",renderNotifications);$("settingMenu").addEventListener("click",renderSettings);
+}
+
+function openProfileEdit(){
+ $("modalCard").innerHTML='<h2>프로필 수정</h2><div class="field"><label>닉네임</label><input id="profileName" value="'+esc(user.name||"하비루트 회원")+'"></div><div class="modal-actions"><button class="secondary" id="profileCancel">취소</button><button class="primary" id="profileSave">저장</button></div>';
+ $("modal").classList.remove("hidden");$("profileCancel").addEventListener("click",closeModal);$("profileSave").addEventListener("click",()=>{const n=$("profileName").value.trim();if(!n)return;user.name=n;save("tuh_user",user);closeModal();renderProfile();toast("프로필을 저장했습니다.")});
+}
+
+function renderSaved(){
+ page("savedPage");
+ const arr=posts.filter(p=>saved.includes(p.id));
+ $("savedPage").innerHTML='<div class="page-top"><div><div class="step">SAVED</div><h1>저장한 글</h1><p class="muted">나중에 다시 볼 콘텐츠입니다.</p></div></div>'+(arr.length?arr.map(feedCard).join(""):'<div class="card"><p class="muted">저장한 글이 없습니다.</p></div>');
+ bindFeedActions($("savedPage"));
+}
+function renderNotifications(){
+ page("notificationPage");
+ $("notificationPage").innerHTML='<div class="page-top"><div><div class="step">NOTIFICATIONS</div><h1>알림</h1></div><button class="secondary" id="readAll">모두 읽음</button></div><div class="menu-list">'+notifications.map(n=>'<button class="menu-row '+(n.read?'':'unread')+'" data-notify="'+n.id+'">'+esc(n.text)+'<span>'+(n.read?"":"●")+'</span></button>').join("")+'</div>';
+ $("readAll").addEventListener("click",()=>{notifications=notifications.map(n=>({...n,read:true}));save("tuh_notifications",notifications);updateNotify();renderNotifications()});
+}
+function updateNotify(){$("notifyDot").classList.toggle("hidden",!notifications.some(n=>!n.read))}
+function renderSettings(){
+ page("settingsPage");
+ $("settingsPage").innerHTML='<div class="page-top"><div><div class="step">SETTINGS</div><h1>설정</h1></div></div><div class="menu-list"><button class="menu-row" id="interestSetting">관심 취미 다시 선택 <span>›</span></button><button class="menu-row" id="notifySetting">알림 설정 <span>›</span></button><button class="menu-row" id="logoutSetting">로그아웃 <span>›</span></button><button class="menu-row" id="resetSetting">MVP 데이터 초기화 <span>›</span></button></div>';
+ $("interestSetting").addEventListener("click",()=>location.reload());$("notifySetting").addEventListener("click",()=>toast("알림 설정 화면은 MVP에서 준비되어 있습니다."));$("logoutSetting").addEventListener("click",()=>toast("MVP 로그아웃 처리"));$("resetSetting").addEventListener("click",()=>{localStorage.clear();location.reload()});
+}
+
+function openReport(type){
+ openModal(type+" 신고","신고 사유를 선택해주세요.<br><br>스팸 · 허위정보 · 욕설/비방 · 사기 의심 · 기타");
+}
+function closeModal(){$("modal").classList.add("hidden")}
+
+function bind(){
+ $("skipBtn").addEventListener("click",skip);
+ $("logo").addEventListener("click",(e)=>{
+  e.preventDefault();
+  e.stopPropagation();
+  try{
+    const tr=$("habirouteTransition");
+    if(tr){tr.classList.remove("show");tr.setAttribute("aria-hidden","true");}
+    $("onboarding").classList.add("hidden");
+    $("app").style.display="block";
+    renderHome();
+    page("homePage","home");
+  }catch(err){
+    console.error("logo home navigation error",err);
+    page("homePage","home");
+  }
+});
+ $("loginBtn").addEventListener("click",()=>openModal("로그인","이메일 또는 카카오·네이버 로그인 UI를 연결할 수 있습니다."));
+ $("notificationBtn").addEventListener("click",renderNotifications);
+ const goMain=(n)=>{
+   if(n==="home") return renderHome();
+   if(n==="community") return renderCommunity(currentHobby);
+   if(n==="search") return renderSearch();
+   if(n==="profile") return renderProfile();
+ };
+ document.querySelectorAll("[data-nav]").forEach(b=>b.addEventListener("click",()=>goMain(b.dataset.nav)));
+ document.querySelectorAll("[data-bottom]").forEach(b=>b.addEventListener("click",()=>{
+   const n=b.dataset.bottom;
+   if(n==="write") return renderWrite();
+   return goMain(n);
+ }));
+ $("modal").addEventListener("click",e=>{if(e.target===$("modal"))closeModal()});
+}
+
+bind();updateNotify();
+currentHobby=selected[0]||"전체";
+renderHome();
+})();
+</script>
+
+<script>
+(function(){
+  const WAIT = 2000;
+  function showTransition(){
+    const el=document.getElementById('habirouteTransition');
+    if(!el) return;
+    el.classList.add('show');
+    el.setAttribute('aria-hidden','false');
+    setTimeout(()=>el.classList.remove('show'), WAIT);
+  }
+
+  // Observe localStorage-based onboarding completion as a fallback.
+  let last = localStorage.getItem('habiroute_onboarding_done');
+  setInterval(()=>{
+    const now=localStorage.getItem('habiroute_onboarding_done');
+    if(now && now!==last){ last=now; showTransition(); }
+  },120);
+
+  // Expose a safe helper for the existing app code.
+  window.habirouteOnboardingComplete = function(){
+    showTransition();
+    setTimeout(function(){
+      if(typeof window.goHome === 'function') window.goHome();
+      else if(typeof window.showPage === 'function') window.showPage('home');
+    }, WAIT);
+  };
+})();
+</script>
+
+
+
+
+
+<script>
+function showHabirouteTransition(){
+  const el=document.getElementById("habirouteTransition");
+  if(!el) return;
+  el.classList.add("show");
+  el.setAttribute("aria-hidden","false");
+  const bar=el.querySelector(".habiroute-transition-progress span");
+  if(bar){ bar.style.animation="none"; void bar.offsetWidth; bar.style.animation="hrProgress 2s linear forwards"; }
+}
+</script>
+
+
+<script>
+window.showHabirouteTransition = function(){
+  const el=document.getElementById("habirouteTransition");
+  if(!el) return;
+  const bar=el.querySelector(".habiroute-transition-progress span");
+  if(bar){
+    bar.style.animation="none";
+    void bar.offsetWidth;
+    bar.style.animation="hrProgress 2s linear forwards";
+  }
+  el.classList.add("show");
+  el.setAttribute("aria-hidden","false");
+};
+</script>
+
+
+<script>
+(function(){
+  document.addEventListener("click", function(e){
+    const el=e.target.closest("[data-hobby], .hobby-card, .hobby-option, .hobby-item");
+    if(!el) return;
+    setTimeout(function(){
+      try{
+        const selected=document.querySelectorAll(
+          "[data-hobby].selected, .hobby-card.selected, .hobby-option.selected, .hobby-item.selected"
+        );
+        if(selected.length===5 && !window.__hrMoving){
+          window.__hrMoving=true;
+          const names=[...selected].map(x=>(x.dataset.hobby || x.textContent).trim()).filter(Boolean);
+          if(names.length){
+            localStorage.setItem("tuh_hobbies", JSON.stringify(names));
+          }
+          if(typeof window.showHabirouteTransition==="function") window.showHabirouteTransition();
+          setTimeout(function(){
+            if(typeof window.enterApp==="function") window.enterApp();
+            else {
+              const home=document.querySelector('[data-page="home"], #homePage, .home-page');
+              if(home) home.style.display="";
+            }
+            window.__hrMoving=false;
+          },2000);
+        }
+      }catch(err){}
+    },20);
+  }, true);
+})();
+</script>
+
+
+<script>
+(function(){
+  const GRADE = [
+    {min:0, name:"새싹"},
+    {min:60, name:"입문자"},
+    {min:180, name:"취미인"},
+    {min:420, name:"숙련자"},
+    {min:900, name:"마스터"}
+  ];
+  function getXP(){
+    return Number(localStorage.getItem("habiroute_xp") || 126);
+  }
+  function getGrade(xp){
+    let g=GRADE[0];
+    GRADE.forEach(x=>{ if(xp>=x.min) g=x; });
+    return g;
+  }
+  window.habirouteAddXP=function(amount){
+    const xp=Math.max(0,getXP()+Number(amount||0));
+    localStorage.setItem("habiroute_xp",String(xp));
+    window.habirouteRefreshGrade && window.habirouteRefreshGrade();
+  };
+  window.habirouteRefreshGrade=function(){
+    const card=document.getElementById("hrGradeCard");
+    if(!card) return;
+    const xp=getXP(), g=getGrade(xp);
+    const idx=GRADE.findIndex(x=>x===g);
+    const next=GRADE[idx+1] || {min:g.min+500};
+    const pct=Math.min(100, Math.max(0, ((xp-g.min)/(next.min-g.min))*100));
+    const name=card.querySelector(".hr-grade-name");
+    const badge=card.querySelector(".hr-grade-badge");
+    const level=card.querySelector(".hr-level-number");
+    const xpt=card.querySelector(".hr-level-xp");
+    const bar=card.querySelector(".hr-progress span");
+    if(name) name.textContent=g.name+" Lv."+Math.max(1,idx+1);
+    if(badge) badge.textContent=g.name;
+    if(level) level.textContent="Lv."+Math.max(1,idx+1)+" → Lv."+Math.max(1,idx+2);
+    if(xpt) xpt.textContent=xp+" / "+next.min+" XP";
+    if(bar) bar.style.width=pct+"%";
+  };
+  document.addEventListener("DOMContentLoaded",window.habirouteRefreshGrade);
+})();
+</script>
+
+
+<script>
+(function(){
+  const rules=[
+    {sel:'[data-action="create-post"], #writePostBtn, .write-post-btn', xp:10},
+    {sel:'[data-action="comment"], #commentSubmit, .comment-submit', xp:2},
+    {sel:'[data-action="like"], .like-btn', xp:3},
+    {sel:'[data-action="save"], .save-btn', xp:1}
+  ];
+  rules.forEach(r=>{
+    document.addEventListener("click",function(e){
+      if(e.target.closest(r.sel) && typeof window.habirouteAddXP==="function"){
+        window.habirouteAddXP(r.xp);
+      }
+    },true);
+  });
+})();
+</script>
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  function openRealMy(){
+    const profile=document.getElementById("profilePage") || document.getElementById("profile");
+    if(!profile) return;
+    document.querySelectorAll('[id$="Page"]').forEach(function(p){
+      if(p!==profile && !p.classList.contains("modal")) p.style.display="none";
+    });
+    profile.style.display="";
+    window.scrollTo(0,0);
+  }
+  document.addEventListener("click",function(e){
+    const el=e.target.closest('[data-nav="my"], #myBtn, .my-page-btn');
+    if(!el) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openRealMy();
+  },true);
+  window.habirouteShowMy=openRealMy;
+})();
+</script>
+
+
+<script id="habiroute-v14-app">
+(function(){
+  const KEY='habiroute_posts_v14';
+  const LIKES='habiroute_likes_v14';
+  const SAVES='habiroute_saves_v14';
+
+  const seed=[
+    {id:'p1',cat:'입문·질문',hobby:'캠핑',user:'캠핑새싹',level:'입문자',title:'2인 캠핑 처음 가는데 꼭 필요한 것만 알려주세요',body:'텐트와 매트는 준비했는데 처음이라 나머지는 최소한으로 챙기고 싶어요. 초보 기준으로 꼭 필요한 것만 추천 부탁드립니다.',tags:['초보캠핑','장비'],likes:24,comments:8,saves:13,time:'12분 전'},
+    {id:'p2',cat:'후기',hobby:'자동차·이륜차',user:'주말라이더',level:'숙련자',title:'이번 주말 300km 라이딩 후기',body:'서울에서 출발해서 강원도 쪽으로 다녀왔습니다. 도로 상태와 휴게 포인트 정리해봤어요.',tags:['바이크','라이딩'],likes:41,comments:12,saves:22,time:'31분 전'},
+    {id:'p3',cat:'정보',hobby:'골프',user:'싱글도전',level:'취미인',title:'드라이버 슬라이스 줄이면서 제가 바꾼 3가지',body:'그립, 어드레스, 티 높이를 바꿔보고 체감했던 차이를 정리했습니다.',tags:['골프팁','드라이버'],likes:33,comments:6,saves:19,time:'1시간 전'},
+    {id:'p4',cat:'자랑하기',hobby:'캠핑',user:'불멍러',level:'취미인',title:'첫 동계 캠핑 성공했습니다',body:'처음으로 영하권에서 캠핑했어요. 생각보다 재밌어서 기록 남겨봅니다.',tags:['동계캠핑','자랑'],likes:67,comments:15,saves:31,time:'2시간 전'},
+    {id:'p5',cat:'자유',hobby:'자동차·이륜차',user:'차좋아',level:'취미인',title:'요즘 주말마다 세차하는 사람 있나요?',body:'평일엔 시간이 없어서 주말마다 세차하는 재미가 생겼네요.',tags:['세차','자동차'],likes:18,comments:9,saves:5,time:'3시간 전'}
+  ];
+
+  function getPosts(){
+    try{return JSON.parse(localStorage.getItem(KEY)||'null')||seed.slice();}
+    catch(e){return seed.slice();}
+  }
+  function savePosts(v){localStorage.setItem(KEY,JSON.stringify(v));}
+  function getSet(k){try{return new Set(JSON.parse(localStorage.getItem(k)||'[]'));}catch(e){return new Set();}}
+  function saveSet(k,s){localStorage.setItem(k,JSON.stringify([...s]));}
+  function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+  let activeHobby=localStorage.getItem('habiroute_active_hobby') || '캠핑';
+  let activeCat='전체';
+
+  function ensureRoot(){
+    let root=document.getElementById('habirouteV14Feed');
+    if(root)return root;
+    root=document.createElement('div');
+    root.id='habirouteV14Feed';
+    root.innerHTML=`
+      <div class="hr-v14-feed-tools">
+        <button class="hr-v14-tool active" data-cat="전체">전체</button>
+        <button class="hr-v14-tool" data-cat="입문·질문">입문·질문</button>
+        <button class="hr-v14-tool" data-cat="정보">정보</button>
+        <button class="hr-v14-tool" data-cat="후기">후기</button>
+        <button class="hr-v14-tool" data-cat="자랑하기">자랑하기</button>
+        <button class="hr-v14-tool" data-cat="자유">자유</button>
+      </div>
+      <div id="habirouteV14Posts"></div>
+      <button id="habirouteV14Write" class="hr-v14-write" aria-label="글쓰기">＋</button>
+      <div id="habirouteV14Modal" class="hr-v14-modal">
+        <div class="hr-v14-sheet">
+          <h3>새 글 작성</h3>
+          <div class="hr-v14-notice">좋은 글은 다른 취미인의 활동과 레벨에도 도움이 됩니다.</div>
+          <select id="hrV14Cat" class="hr-v14-select">
+            <option>입문·질문</option><option>정보</option><option>후기</option><option>자랑하기</option><option>자유</option>
+          </select>
+          <input id="hrV14Title" class="hr-v14-input" placeholder="제목을 입력하세요">
+          <textarea id="hrV14Body" class="hr-v14-textarea" placeholder="취미 이야기를 자유롭게 적어주세요"></textarea>
+          <input id="hrV14Tags" class="hr-v14-input" placeholder="태그 (쉼표로 구분)">
+          <button id="hrV14Submit" class="hr-v14-primary">게시하기</button>
+          <button id="hrV14Close" class="hr-v14-secondary">닫기</button>
+        </div>
+      </div>`;
+    return root;
+  }
+
+  function render(){
+    const root=ensureRoot();
+    const target=document.getElementById('habirouteV14Posts');
+    if(!target)return;
+    const posts=getPosts();
+    const likes=getSet(LIKES), saves=getSet(SAVES);
+    const filtered=posts.filter(p=>p.hobby===activeHobby && (activeCat==='전체'||p.cat===activeCat));
+    target.innerHTML=filtered.length?filtered.map(p=>`
+      <article class="hr-v14-post">
+        <div class="hr-v14-meta">${esc(p.level)} · ${esc(p.time)}</div></div>
+        </div>
+        <div class="hr-v14-post-title">${esc(p.title)}</div>
+        <div class="hr-v14-post-body">${esc(p.body)}</div>
+        <div>${(p.tags||[]).map(t=>`<span class="hr-v14-tag">#${esc(t)}</span>`).join('')}</div>
+        <div class="hr-v14-actions">
+          <button class="hr-v14-action ${likes.has(p.id)?'on':''}" data-like="${p.id}">♥ ${p.likes+(likes.has(p.id)?1:0)}</button>
+          <button class="hr-v14-action">댓글 ${p.comments}</button>
+          <button class="hr-v14-action ${saves.has(p.id)?'on':''}" data-save="${p.id}">저장 ${saves.has(p.id)?'됨':'하기'}</button>
+        </div>
+      </article>`).join(''):`<div class="hr-v14-empty">아직 이 취미의 글이 없어요.<br>첫 번째 글을 남겨보세요.</div>`;
+
+    root.querySelectorAll('[data-cat]').forEach(b=>b.classList.toggle('active',b.dataset.cat===activeCat));
+  }
+
+  function mount(){
+    // Prefer the main home/community content container, otherwise append to body.
+    let host=document.querySelector('#homePage .content, #homePage main, #homePage') ||
+             document.querySelector('#communityPage .content, #communityPage main, #communityPage');
+    if(!host) return;
+    if(!document.getElementById('habirouteV14Feed')) host.appendChild(ensureRoot());
+    render();
+  }
+
+  document.addEventListener('click',function(e){
+    const cat=e.target.closest('[data-cat]');
+    if(cat && cat.closest('#habirouteV14Feed')){
+      activeCat=cat.dataset.cat; render(); return;
+    }
+    const like=e.target.closest('[data-like]');
+    if(like){
+      const id=like.dataset.like, s=getSet(LIKES);
+      s.has(id)?s.delete(id):s.add(id); saveSet(LIKES,s); render(); return;
+    }
+    const save=e.target.closest('[data-save]');
+    if(save){
+      const id=save.dataset.save, s=getSet(SAVES);
+      s.has(id)?s.delete(id):s.add(id); saveSet(SAVES,s); render(); return;
+    }
+    if(e.target.id==='habirouteV14Write'){document.getElementById('habirouteV14Modal').classList.add('show');}
+    if(e.target.id==='hrV14Close'){document.getElementById('habirouteV14Modal').classList.remove('show');}
+    if(e.target.id==='hrV14Submit'){
+      const title=document.getElementById('hrV14Title').value.trim();
+      const body=document.getElementById('hrV14Body').value.trim();
+      const cat=document.getElementById('hrV14Cat').value;
+      const tags=document.getElementById('hrV14Tags').value.split(',').map(x=>x.trim()).filter(Boolean);
+      if(!title||!body){alert('제목과 내용을 입력해주세요.');return;}
+      const posts=getPosts();
+      posts.unshift({id:'u'+Date.now(),cat,hobby:activeHobby,user:'나',level:'취미인',title,body,tags,likes:0,comments:0,saves:0,time:'방금 전'});
+      savePosts(posts);
+      document.getElementById('habirouteV14Title').value='';
+      document.getElementById('habirouteV14Body').value='';
+      document.getElementById('habirouteV14Tags').value='';
+      document.getElementById('habirouteV14Modal').classList.remove('show');
+      render();
+    }
+  },true);
+
+  // When a hobby tab is clicked elsewhere in the app, sync the feed.
+  document.addEventListener('click',function(e){
+    const h=e.target.closest('[data-hobby]');
+    if(h){
+      const val=h.dataset.hobby || h.textContent.trim();
+      if(val && val!=='취미 추가 +'){
+        activeHobby=val; localStorage.setItem('habiroute_active_hobby',val);
+        setTimeout(render,30);
+      }
+    }
+  },true);
+
+  window.habirouteV14Mount=mount;
+  window.habirouteV14Render=render;
+  // legacy overlay disabled; main community renderer owns the feed.
+})();
+</script>
+
+
+<style id="habiroute-community-board-v2">
+/* Community UI: compact forum / cafe style */
+.hr-v14-feed-tools{display:flex;gap:0;overflow:auto;border-bottom:1px solid #DCD8D0;background:#fff;margin-bottom:6px}
+.hr-v14-tool{border:0;background:#fff;padding:10px 13px;color:#666;font-weight:700;font-size:13px;white-space:nowrap;border-bottom:2px solid transparent}
+.hr-v14-tool.active{color:#18212B;border-bottom-color:#FF6B35}
+.hr-v14-post{border-radius:2px!important;padding:7px 10px!important;margin:0!important;background:#fff;border:0!important;border-bottom:1px solid #E6E1D8!important}
+.hr-v14-compact-meta{font-size:11px!important;gap:8px!important}
+.hr-v14-post-title{font-size:14px!important;font-weight:800!important;line-height:1.3!important;margin:3px 0 2px!important}
+.hr-v14-post-body,.hr-v14-post>div:nth-of-type(4){display:none!important}
+.hr-v14-actions{margin-top:2px!important;gap:10px!important}
+.hr-v14-action{font-size:11px!important;padding:0!important}
+.hr-comments-card{border-radius:4px!important;padding:14px!important}
+.hr-comment{padding:10px 0;border-bottom:1px solid #EEEAE2}
+.hr-comment-main{font-size:13px}.hr-comment-text{margin-top:4px;line-height:1.5}
+.hr-reply-toggle{border:0;background:none;padding:5px 0;color:#777;font-size:11px}
+.hr-replies{margin:4px 0 0 20px;border-left:2px solid #EEEAE2;padding-left:10px}
+.hr-reply{padding:6px 0;font-size:12px;border-bottom:1px solid #F2EFE9}
+.hr-reply-form{display:none;margin:6px 0 2px 20px;gap:6px}.hr-reply-form.show{display:flex}
+.hr-reply-form input,.hr-comment-write input{flex:1;border:1px solid #DDD8CF;border-radius:4px;padding:8px;font-size:12px}
+.hr-reply-form button{padding:7px 10px!important;font-size:11px}
+.hr-comment-write{display:flex;gap:7px;margin-top:12px}
+@media(max-width:600px){.hr-v14-post{padding:6px 8px!important}.hr-v14-post-title{font-size:13px!important}.hr-v14-post-info{font-size:10px!important}.hr-v14-tool{padding:9px 10px;font-size:12px}}
+</style>
+
+
+
+</body>
+</html>
