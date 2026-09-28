@@ -462,6 +462,22 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{
 img { border-radius: 14px !important; overflow: hidden; }
 .photo-preview img { border-radius: 14px !important; }
 </style>
+
+<style id="hr-side-ads">
+.hr-side-ad{
+  position:fixed;top:42vh;width:150px;min-height:190px;z-index:25;
+  background:#fff;border:1px solid #E6E1D8;border-radius:14px;
+  box-shadow:0 8px 28px rgba(24,33,43,.10);padding:14px;
+  transform:translateY(-50%);
+}
+.hr-side-ad-left{left:max(10px,calc(50% - 770px));}
+.hr-side-ad-right{right:max(10px,calc(50% - 770px));}
+.hr-side-ad .ad-label{font-size:10px;color:#999;font-weight:900;letter-spacing:.08em;margin-bottom:9px;}
+.hr-side-ad .ad-title{font-size:14px;font-weight:900;line-height:1.35;color:#18212B;}
+.hr-side-ad .ad-copy{font-size:11px;color:#6F747A;line-height:1.5;margin-top:7px;}
+.hr-side-ad .ad-cta{display:inline-block;margin-top:12px;padding:7px 9px;border-radius:8px;background:#18212B;color:#fff;font-size:10px;font-weight:800;}
+@media(max-width:1450px){.hr-side-ad{display:none!important;}}
+</style>
 </head>
 <body>
 <!-- HABIROUTE_V17_NO_BUSINESS: all business/commercial UI hidden -->
@@ -582,6 +598,8 @@ img { border-radius: 14px !important; overflow: hidden; }
 
 <div id="modal" class="modal hidden"><div id="modalCard" class="modal-card"></div></div>
 <div id="toast" class="toast hidden"></div>
+<div id="habirouteAdLeft" class="hr-side-ad hr-side-ad-left hidden" aria-label="광고"></div>
+<div id="habirouteAdRight" class="hr-side-ad hr-side-ad-right hidden" aria-label="광고"></div>
 
 <script>
 (function(){
@@ -612,6 +630,7 @@ let currentPostId=null;
 let currentLoungeBoard=null;
 let user=load("tuh_user",{name:"하비루트 회원"});
 let currentPage=null;
+let __hrRoutingFromHistory=false;
 
 const $=id=>document.getElementById(id);
 function load(k,f){try{const x=localStorage.getItem(k);return x?JSON.parse(x):f}catch(e){return f}}
@@ -630,11 +649,58 @@ function page(id,navKey){
   document.querySelectorAll("#app>.page").forEach(x=>x.classList.add("hidden"));
   const target=$(id);
   if(target) target.classList.remove("hidden");
-  const fallback={homePage:"home",communityPage:"community",searchPage:"search",profilePage:"profile",savedPage:"profile",notificationPage:"profile",settingsPage:"profile",writePage:"community",detailPage:"community"};
+  const fallback={homePage:"home",communityPage:"community",searchPage:"search",profilePage:"profile",savedPage:"saved",notificationPage:"notifications",settingsPage:"settings",writePage:"write",detailPage:"detail"};
   currentPage=navKey!==undefined?navKey:(fallback[id]||null);
   updateNavState();
   window.scrollTo(0,0);
 }
+function routeUrl(view,data){
+  if(view==='home') return location.pathname;
+  const suffix=data&&data.postId?('-'+encodeURIComponent(data.postId)):'';
+  return location.pathname+'#'+view+suffix;
+}
+function pushRoute(view,data){
+  const state={app:'habiroute',view:view,...(data||{})};
+  history.pushState(state,'',routeUrl(view,data));
+}
+function replaceRoute(view,data){
+  const state={app:'habiroute',view:view,...(data||{})};
+  history.replaceState(state,'',routeUrl(view,data));
+}
+function renderRoute(state){
+  const v=state&&state.view||'home';
+  __hrRoutingFromHistory=true;
+  try{
+    if(v==='home') return renderHome();
+    if(v==='community'){ if(state&&state.hobby) currentHobby=state.hobby; return renderCommunity(currentHobby); }
+    if(v==='search') return renderSearch();
+    if(v==='profile') return renderProfile();
+    if(v==='saved') return renderSaved(true);
+    if(v==='notifications') return renderNotifications(true);
+    if(v==='settings') return renderSettings(true);
+    if(v==='write') return renderWrite(state&&state.topic||null,true);
+    if(v==='detail') return openPostDetail(Number(state&&state.postId),false);
+    return renderHome();
+  } finally {
+    setTimeout(()=>{__hrRoutingFromHistory=false;},0);
+  }
+}
+function navigateMain(n){
+  if(n==='home'){pushRoute('home');return renderHome();}
+  if(n==='community'){pushRoute('community',{hobby:currentHobby});return renderCommunity(currentHobby);}
+  if(n==='search'){pushRoute('search');return renderSearch();}
+  if(n==='profile'){pushRoute('profile');return renderProfile();}
+}
+window.addEventListener('popstate',function(e){
+  if(e.state && e.state.app==='habiroute'){
+    document.getElementById('onboarding')?.classList.add('hidden');
+    document.getElementById('app').style.display='block';
+    renderRoute(e.state);
+  } else {
+    replaceRoute('home');
+    renderHome();
+  }
+});
 function enterApp(){
   const tr=document.getElementById("habirouteTransition");
   if(tr){ tr.classList.remove("show"); tr.setAttribute("aria-hidden","true"); }
@@ -751,11 +817,12 @@ function bindFeedActions(root){
     openPostDetail(Number(b.dataset.comment));
   }));
 }
-function openPostDetail(id){
+function openPostDetail(id, shouldPush=true){
   const p=posts.find(x=>x.id===id);if(!p)return;
   p.views=(Number(p.views)||0)+1;
   save("tuh_posts",posts);
   currentPostId=id;
+  if(shouldPush && !__hrRoutingFromHistory) pushRoute("detail",{postId:id});
   page("communityPage");
   const comments=normalizeComments(p);
   const commentHtml=comments.length?comments.map(c=>{
@@ -776,12 +843,15 @@ function openPostDetail(id){
     '<button class="hr-v14-action '+(saved.includes(id)?'on':'')+'" id="detailSave">'+(saved.includes(id)?'★ 저장됨':'☆ 저장')+'</button></div></article>'+ 
     '<div class="card hr-comments-card"><h3>댓글 '+commentCount(p)+'</h3>'+commentHtml+
     '<div class="hr-comment-write"><input id="newComment" placeholder="댓글을 입력하세요"><button class="primary" id="commentSend" style="width:auto;margin:0">등록</button></div></div>';
-  $("detailBack").addEventListener("click",()=>renderCommunity(currentHobby));
-  $("detailLike").addEventListener("click",()=>{const i=liked.indexOf(id);if(i>=0)liked.splice(i,1);else liked.push(id);p.likes=Math.max(0,(p.likes||0)+(i>=0?-1:1));save("tuh_liked",liked);save("tuh_posts",posts);openPostDetail(id)});
-  $("detailSave").addEventListener("click",()=>{const i=saved.indexOf(id);if(i>=0)saved.splice(i,1);else saved.push(id);save("tuh_saved",saved);openPostDetail(id)});
+  $("detailBack").addEventListener("click",()=>{
+    if(history.length>1) history.back();
+    else { pushRoute("community",{hobby:currentHobby}); renderCommunity(currentHobby); }
+  });
+  $("detailLike").addEventListener("click",()=>{const i=liked.indexOf(id);if(i>=0)liked.splice(i,1);else liked.push(id);p.likes=Math.max(0,(p.likes||0)+(i>=0?-1:1));save("tuh_liked",liked);save("tuh_posts",posts);openPostDetail(id,false)});
+  $("detailSave").addEventListener("click",()=>{const i=saved.indexOf(id);if(i>=0)saved.splice(i,1);else saved.push(id);save("tuh_saved",saved);openPostDetail(id,false)});
   $("commentSend").addEventListener("click",()=>{
     const v=$("newComment").value.trim();if(!v)return;
-    normalizeComments(p);p.comments.push({id:'c'+Date.now(),text:v,user:user.name||'하비루트 회원',replies:[]});p.views=(p.views||0)+1;save("tuh_posts",posts);openPostDetail(id);
+    normalizeComments(p);p.comments.push({id:'c'+Date.now(),text:v,user:user.name||'하비루트 회원',replies:[]});save("tuh_posts",posts);openPostDetail(id,false);
   });
   $("communityPage").querySelectorAll('[data-reply-toggle]').forEach(btn=>btn.addEventListener('click',()=>{
     const form=$("replyForm_"+btn.dataset.replyToggle); if(form) form.classList.toggle('show');
@@ -791,7 +861,7 @@ function openPostDetail(id){
     const v=input&&input.value.trim(); if(!v)return;
     const c=comments.find(x=>x.id===cid); if(!c)return;
     c.replies=c.replies||[]; c.replies.push({id:'r'+Date.now(),text:v,user:user.name||'하비루트 회원'});
-    save("tuh_posts",posts); openPostDetail(id);
+    save("tuh_posts",posts); openPostDetail(id,false);
   }));
 }
 async function compressImage(file){
@@ -813,7 +883,8 @@ async function compressImage(file){
  });
 }
 
-function renderWrite(topic){
+function renderWrite(topic, fromHistory=false){
+  if(!fromHistory && !__hrRoutingFromHistory) pushRoute("write",{topic:topic||null});
   page("writePage");
   const initial=topic?normalizeTopic(topic):"자유";
   $("writePage").innerHTML=
@@ -827,7 +898,10 @@ function renderWrite(topic){
     '<div class="form-actions"><button class="secondary" id="writeCancel">취소</button><button class="primary" id="writePublish">등록하기</button></div></div>';
   const imageInput=$("writeImages"), imagePreview=$("writeImagePreview");
   imageInput.addEventListener("change",()=>{ imagePreview.innerHTML=""; Array.from(imageInput.files||[]).slice(0,8).forEach(file=>{ if(!file.type.startsWith("image/")) return; const url=URL.createObjectURL(file); const img=document.createElement("img"); img.src=url; img.onload=()=>URL.revokeObjectURL(url); imagePreview.appendChild(img); }); });
-  $("writeCancel").addEventListener("click",()=>renderCommunity(currentHobby));
+  $("writeCancel").addEventListener("click",()=>{
+   if(history.length>1) history.back();
+   else { pushRoute("community",{hobby:currentHobby}); renderCommunity(currentHobby); }
+ });
   $("writePublish").addEventListener("click",async()=>{
     const title=$("writeTitle").value.trim(),body=$("writeBody").value.trim();
     if(!title||!body){toast("제목과 내용을 입력해주세요.");return}
@@ -875,9 +949,9 @@ function renderHome(){
  '</div>';
  $("homeAddHobby").addEventListener("click",openHobbyAdd);
  
- $("homePage").querySelectorAll("[data-mine-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.mineHobby;renderCommunity(currentHobby)}));
- $("homePage").querySelectorAll("[data-home-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.homeHobby;renderCommunity(currentHobby)}));
- $("homePage").querySelectorAll("[data-popular-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.popularHobby;renderCommunity(currentHobby)}));
+ $("homePage").querySelectorAll("[data-mine-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.mineHobby;pushRoute("community",{hobby:currentHobby});renderCommunity(currentHobby)}));
+ $("homePage").querySelectorAll("[data-home-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.homeHobby;pushRoute("community",{hobby:currentHobby});renderCommunity(currentHobby)}));
+ $("homePage").querySelectorAll("[data-popular-hobby]").forEach(b=>b.addEventListener("click",()=>{currentHobby=b.dataset.popularHobby;pushRoute("community",{hobby:currentHobby});renderCommunity(currentHobby)}));
  const hotLounge=posts.slice().sort((a,b)=>(Number(b.views)||0)-(Number(a.views)||0)).slice(0,5);
  $("homeHotLounge").innerHTML=hotLounge.length?'<div class="hot-lounge-list">'+hotLounge.map((p,i)=>'<button class="hot-lounge-row" data-hot-post="'+p.id+'"><span class="hot-rank">'+(i+1)+'</span><span class="hot-lounge-title">'+esc(p.title)+'</span><span class="hot-lounge-meta">조회 '+(p.views||0)+'</span></button>').join('')+'</div>':'<p class="muted">아직 인기 글이 없습니다.</p>';
  $("homePage").querySelectorAll("[data-hot-post]").forEach(b=>b.addEventListener("click",()=>openPostDetail(Number(b.dataset.hotPost))));
@@ -1028,19 +1102,22 @@ function openProfileEdit(){
  $("modal").classList.remove("hidden");$("profileCancel").addEventListener("click",closeModal);$("profileSave").addEventListener("click",()=>{const n=$("profileName").value.trim();if(!n)return;user.name=n;save("tuh_user",user);closeModal();renderProfile();toast("프로필을 저장했습니다.")});
 }
 
-function renderSaved(){
+function renderSaved(fromHistory=false){
+ if(!fromHistory && !__hrRoutingFromHistory) pushRoute("saved");
  page("savedPage");
  const arr=posts.filter(p=>saved.includes(p.id));
  $("savedPage").innerHTML='<div class="page-top"><div><div class="step">SAVED</div><h1>저장한 글</h1><p class="muted">나중에 다시 볼 콘텐츠입니다.</p></div></div>'+(arr.length?arr.map(feedCard).join(""):'<div class="card"><p class="muted">저장한 글이 없습니다.</p></div>');
  bindFeedActions($("savedPage"));
 }
-function renderNotifications(){
+function renderNotifications(fromHistory=false){
+ if(!fromHistory && !__hrRoutingFromHistory) pushRoute("notifications");
  page("notificationPage");
  $("notificationPage").innerHTML='<div class="page-top"><div><div class="step">NOTIFICATIONS</div><h1>알림</h1></div><button class="secondary" id="readAll">모두 읽음</button></div><div class="menu-list">'+notifications.map(n=>'<button class="menu-row '+(n.read?'':'unread')+'" data-notify="'+n.id+'">'+esc(n.text)+'<span>'+(n.read?"":"●")+'</span></button>').join("")+'</div>';
- $("readAll").addEventListener("click",()=>{notifications=notifications.map(n=>({...n,read:true}));save("tuh_notifications",notifications);updateNotify();renderNotifications()});
+ $("readAll").addEventListener("click",()=>{notifications=notifications.map(n=>({...n,read:true}));save("tuh_notifications",notifications);updateNotify();renderNotifications(true)});
 }
 function updateNotify(){$("notifyDot").classList.toggle("hidden",!notifications.some(n=>!n.read))}
-function renderSettings(){
+function renderSettings(fromHistory=false){
+ if(!fromHistory && !__hrRoutingFromHistory) pushRoute("settings");
  page("settingsPage");
  $("settingsPage").innerHTML='<div class="page-top"><div><div class="step">SETTINGS</div><h1>설정</h1></div></div><div class="menu-list"><button class="menu-row" id="interestSetting">관심 취미 다시 선택 <span>›</span></button><button class="menu-row" id="notifySetting">알림 설정 <span>›</span></button><button class="menu-row" id="logoutSetting">로그아웃 <span>›</span></button><button class="menu-row" id="resetSetting">MVP 데이터 초기화 <span>›</span></button></div>';
  $("interestSetting").addEventListener("click",()=>location.reload());$("notifySetting").addEventListener("click",()=>toast("알림 설정 화면은 MVP에서 준비되어 있습니다."));$("logoutSetting").addEventListener("click",()=>toast("MVP 로그아웃 처리"));$("resetSetting").addEventListener("click",()=>{localStorage.clear();location.reload()});
@@ -1049,7 +1126,64 @@ function renderSettings(){
 function openReport(type){
  openModal(type+" 신고","신고 사유를 선택해주세요.<br><br>스팸 · 허위정보 · 욕설/비방 · 사기 의심 · 기타");
 }
+function openModal(title,body){
+  const card=$("modalCard");
+  if(!card) return;
+  card.innerHTML='<h2>'+esc(title)+'</h2><div>'+body+'</div><div class="modal-actions"><button class="secondary" id="modalCloseBtn">닫기</button></div>';
+  $("modal").classList.remove("hidden");
+  const close=$("modalCloseBtn");
+  if(close) close.addEventListener("click",closeModal);
+}
+function openLoginModal(){
+  const card=$("modalCard");
+  if(!card) return;
+  const currentEmail=localStorage.getItem("tuh_login_email")||"";
+  card.innerHTML='<h2>로그인</h2>'+
+    '<p class="muted" style="margin-top:-4px">현재 프로토타입에서는 이 브라우저에만 로그인 상태가 저장됩니다.</p>'+
+    '<div class="field"><label>이메일</label><input id="loginEmail" type="email" value="'+esc(currentEmail)+'" placeholder="example@email.com" autocomplete="email"></div>'+
+    '<div class="field"><label>비밀번호</label><input id="loginPassword" type="password" placeholder="비밀번호" autocomplete="current-password"></div>'+
+    '<div class="modal-actions"><button class="secondary" id="loginCloseBtn">취소</button><button class="primary" id="loginSubmitBtn">로그인</button></div>';
+  $("modal").classList.remove("hidden");
+  $("loginCloseBtn").addEventListener("click",closeModal);
+  $("loginSubmitBtn").addEventListener("click",()=>{
+    const email=$("loginEmail").value.trim();
+    const pw=$("loginPassword").value;
+    if(!email || !pw){toast("이메일과 비밀번호를 입력해주세요.");return;}
+    localStorage.setItem("tuh_login_email",email);
+    localStorage.setItem("tuh_auth","1");
+    user={...user,name:user.name&&user.name!=="하비루트 회원"?user.name:email.split("@")[0]||"하비루트 회원",email};
+    save("tuh_user",user);
+    closeModal();
+    syncLoginButton();
+    toast("로그인 상태가 저장되었습니다.");
+  });
+}
+function syncLoginButton(){
+  const btn=$("loginBtn");
+  if(!btn)return;
+  if(localStorage.getItem("tuh_auth")==="1") btn.textContent=user.name||"내 계정";
+  else btn.textContent="로그인";
+}
 function closeModal(){$("modal").classList.add("hidden")}
+
+const HR_ADS=[
+  {title:"취미 장비, 사기 전에 비교해보세요",copy:"가격·후기·실사용 정보부터 가볍게 확인하세요.",cta:"자세히 보기"},
+  {title:"이번 주말, 새로운 취미 어때요?",copy:"가까운 곳에서 시작하기 좋은 취미를 찾아보세요.",cta:"둘러보기"},
+  {title:"하비루트 추천 콘텐츠",copy:"지금 사람들이 많이 읽는 이야기를 모아봤어요.",cta:"인기글 보기"},
+  {title:"초보자를 위한 취미 가이드",copy:"처음 시작할 때 필요한 기본 정보만 모았습니다.",cta:"가이드 보기"}
+];
+function renderSideAds(){
+  const left=$("habirouteAdLeft"),right=$("habirouteAdRight");
+  if(!left||!right)return;
+  if(window.innerWidth<=1450){left.classList.add("hidden");right.classList.add("hidden");return;}
+  const shuffled=HR_ADS.slice().sort(()=>Math.random()-0.5);
+  [left,right].forEach((el,i)=>{
+    const ad=shuffled[i%shuffled.length];
+    el.innerHTML='<div class="ad-label">ADVERTISEMENT</div><div class="ad-title">'+esc(ad.title)+'</div><div class="ad-copy">'+esc(ad.copy)+'</div><span class="ad-cta">'+esc(ad.cta)+'</span>';
+    el.classList.remove("hidden");
+  });
+}
+window.addEventListener("resize",renderSideAds);
 
 function bind(){
  $("skipBtn").addEventListener("click",skip);
@@ -1061,6 +1195,7 @@ function bind(){
     if(tr){tr.classList.remove("show");tr.setAttribute("aria-hidden","true");}
     $("onboarding").classList.add("hidden");
     $("app").style.display="block";
+    if(currentPage==="home") replaceRoute("home"); else pushRoute("home");
     renderHome();
     page("homePage","home");
   }catch(err){
@@ -1068,14 +1203,13 @@ function bind(){
     page("homePage","home");
   }
 });
- $("loginBtn").addEventListener("click",()=>openModal("로그인","이메일 또는 카카오·네이버 로그인 UI를 연결할 수 있습니다."));
+ $("loginBtn").addEventListener("click",()=>{
+   if(localStorage.getItem("tuh_auth")==="1") renderProfile();
+   else openLoginModal();
+ });
+ syncLoginButton();
  $("notificationBtn").addEventListener("click",renderNotifications);
- const goMain=(n)=>{
-   if(n==="home") return renderHome();
-   if(n==="community") return renderCommunity(currentHobby);
-   if(n==="search") return renderSearch();
-   if(n==="profile") return renderProfile();
- };
+ const goMain=(n)=>navigateMain(n);
  document.querySelectorAll("[data-nav]").forEach(b=>b.addEventListener("click",()=>goMain(b.dataset.nav)));
  document.querySelectorAll("[data-bottom]").forEach(b=>b.addEventListener("click",()=>{
    const n=b.dataset.bottom;
@@ -1087,7 +1221,9 @@ function bind(){
 
 bind();updateNotify();
 currentHobby=selected[0]||"전체";
+replaceRoute("home");
 renderHome();
+renderSideAds();
 })();
 </script>
 
